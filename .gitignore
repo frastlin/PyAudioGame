@@ -1,5 +1,7 @@
 # Compiled python modules.
 *.pyc
+ #My personal files:
+stuff to do.txt
 
 # Setuptools distribution folder.
 /dist/
