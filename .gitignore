@@ -11,3 +11,6 @@
 #markdown files in documentation
 documentation/*.txt
 documentation/Markdown.pl
+
+#The PyAudioGame.wiki
+/PyAudioGame.wiki/
