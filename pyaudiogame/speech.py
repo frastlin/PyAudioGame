@@ -1,4 +1,5 @@
 #Speaks text in the way I wish without hard-coding accessible_output like normal.
+#accessible_output2 has a compiling error and accessible_output2 and accessible_output are not compatible.
 #import accessible_output2.outputs.auto
 #spk = accessible_output2.outputs.auto.Auto().output
 

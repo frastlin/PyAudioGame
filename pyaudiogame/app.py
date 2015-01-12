@@ -38,7 +38,7 @@ class App(object):
 		pass
 
 	def set_defaults(self):
-		"""Call this function to change of the default variables"""
+		"""Call this function to change the default variables"""
 		pass
 
 	def run(self):
