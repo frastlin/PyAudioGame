@@ -1,0 +1,223 @@
+<p><title>Advanced pyaudiogame tutorial</title></p>
+
+<p><br/></p>
+
+<h1>who is this for</h1>
+
+<p>This is the advanced tutorial. If you know python and wish to get started with using pyaudiogame right away, this is the place for you. If the words class, method, attribute, variable, function, argument, import, module, calling or self are at all alian to you, save yourself the confusion and <a href="./basic/index.html">head over to the other tutorial</a></p>
+
+<h2>basic layout</h2>
+
+<p>In pyaudiogame, everything is based off the
+pyaudiogame.App
+class.
+You can either call an instance and add your settings and logic to it, or create a child of App and sub-class the functions you need. It is built for both.
+Head down to the hello world basic and hello world advanced to see the two different ways.</p>
+
+<h2>important things to know</h2>
+
+<p>Here there will be a basic description for the important parts of pyaudiogame, but for a more advanced description, see <a href=".API/index.html">the api</a> or read the code under pyaudiogame/.</p>
+
+<h3>App class</h3>
+
+<h4>methods</h4>
+
+<p>The app class has 4 methods and several attributes that are important:
+For the methods we have:</p>
+
+<pre><code>def logic(self, actions):
+	"""Overwrite this and put your game logic here. This is just a place-holder for now"""
+	pass
+</code></pre>
+
+<p>It is where every script in your game goes and is one of the two methods you should sub-class.
+actions is a dict of all the events you can moniter. The most important events from actions are:
+actions['key']
+is a string of the current key, like "up", "down", "space", "f", "f1", "escape", "\"...</p>
+
+<p>actions['mods']
+This is a list of the modifier keys like: "shift", "ctrl", "alt", "shift"...</p>
+
+<p>There is also actions['mousex'], actions['mousey'] and actions['mouseClicked'] which deal with the mouse. For more info, see the <a href=".API/index.html">API.</a>
+<br/><br/></p>
+
+<pre><code>def run(self):
+	"""Call this when you are ready to start your game. It will run your main loop and create your screen"""
+	#game looping code
+</code></pre>
+
+<p>Call this at the bottom of your main app module and it will start the application. It is not advised to override this unless you know pyaudiogame very well. <br />
+<br/><br/></p>
+
+<pre><code>def key_repeat(self, on=True, delay=1000, delay_before_first_repeat=1):
+	"""Call this function to either start what happens when a key is held down or to turn it off."""
+	#Code that deals with held down keys
+</code></pre>
+
+<p>If you wish to have a new key event triggered every interval (like for walking), turn this on by calling it like:</p>
+
+<pre><code>MyApp.key_repeat(delay=500)
+</code></pre>
+
+<p>delay is the amount of time between each re-sending of the event in milliseconds, so the above will trigger every half-second.
+When you wish to turn it off, do</p>
+
+<pre><code>MyApp.key_repeat(on=False)
+
+def set_defaults(self):
+	"""Call this function to change the default variables"""
+	pass
+</code></pre>
+
+<p>This is only for subclassing. If you don't wish to over-ride the <strong>init</strong> method, but would like to change the default variables easily, this method is run at initialization. <br />
+<br/><br/></p>
+
+<pre><code>self.event_queue.schedule(self, function, delay=0, repeats=1, before_delay=False, *args, **kwargs)
+</code></pre>
+
+<p>Hey wait, that's not a method!</p>
+
+<p>No, that's why it is at the end of the methods and before the attributes. This is the event queue. You call MyApp.event_queue.schedule and pass in a function, the amount of time you wish to pass, how many times you would like the function to trigger, if you would like the delay before or after the function and any arguments or key-word arguments you wish to pass to your function. A call would look like:</p>
+
+<pre><code>MyApp.event_queue.schedule(hello_world, 1)
+</code></pre>
+
+<p>This would run hello_world() 1 second later.</p>
+
+<h4>default attributes</h4>
+
+<p>The first two can be passed in to the __init__ call:</p>
+
+<pre><code>self.title = title
+self.fps = fps
+</code></pre>
+
+<p>title is the name of the screen and fps is the amount of times the game loop runs each second. The default is 30 and that should be plenty for an audio game. Most graphical games run at 60, but that is because graphics take a lot of effort to get smoothe.
+Here are the other defaults, but you can learn more about them at the API.</p>
+
+<pre><code>#Default variables that can be changed, but are not called
+#For the screen:
+#The two below numbers are in pixels, the current screen is a little box on the screen
+self.windowwidth = 640
+self.windowheight = 480
+#Full screen expands everything and fills the whole screen
+self.fullscreen = False
+#If the mouse should be visible or not
+self.mouse = False
+#Our event queue
+self.event_queue = ticker.Scheduler(time_format=0.001)
+#A hard-coded exit key, 1 is escape, 2 is alt + f4 and 0 is nothing **WARNING** if there is no exit key you need to go to command prompt window and hit ctrl + c to exit the window!
+self.exit_key = 1
+</code></pre>
+<br/>
+
+<h2>Hello world basic</h2>
+
+<p>*see the source for this in examples/hello_world.py*</p>
+
+<h3>code:</h3>
+
+<pre><code>import pyaudiogame
+spk = pyaudiogame.speech.speak
+
+#First create a basic app
+app = pyaudiogame.App("My hello world app")
+
+#Now make some game logic
+def logic(actions):
+	"""Our game logic function that gets run every iteration of our app's running loop"""
+	if actions['key'] == "space":
+		spk("Hello world")
+
+#Put our logic into the app
+app.logic = logic
+
+#Run our app
+app.run()
+</code></pre>
+<br/>
+
+<h3>hello_world basic explanation</h3>
+
+<p>If you didn't figure it out, you need to press space to get hello world to speak...<br/>
+This is a pretty self-explanatory piece of code, we call an instance of App, replace the logic method and run it.<br/>
+Some things to take note of:<br/>
+<pre>
+	import pyaudiogame
+	spk = pyaudiogame.speech.speak
+</pre>
+The speech.speak function accesses what ever screen-reader the person has running. It also prints the text out in Braille.
+There is nothing wrong with running your app this way, but, if for some reason you wish to be more complex, read on for the sub-classing example.</p>
+
+<h2>hello_world_advanced</h2>
+
+<p>The source can be found at examples/advanced/hello_world_advanced.py</p>
+
+<h3>code:</h3>
+
+<pre><code>#This is a hello world example using the more powerful sub-classing option
+from pyaudiogame import App
+from pyaudiogame.speech import speak as spk
+
+class MyApp(App):
+	"""We create our class as a child of App and we can sub-class the logic function which is run each iteration of the game loop"""
+	def logic(self, actions):
+		"""actions is a dict of all the input events, like keyboard and mouse"""
+		if actions['key'] == "space":
+			spk("Hello world")
+
+if __name__ == '__main__':
+	#call the run function for our app to begin the game loop. press escape to exit.
+	MyApp().run()
+</code></pre>
+<br/>
+<h3>hello_world_advanced explanation</h3>
+
+<pre><code>#This is a hello world example using the more powerful sub-classing option
+from pyaudiogame import App
+from pyaudiogame.speech import speak as spk
+
+class MyApp(App):
+	"""We create our class as a child of App and we can sub-class the logic function which is run each
+		iteration of the game loop."""
+</code></pre>
+
+<p>Here is where we are saying that this is the App class, but I'm going to rename it and if I wish, I can add and change methods, even the ones that App already has.
+This is what we do, we change the
+<br/>
+	logic()
+<br/>
+method:</p>
+
+<pre><code>	def logic(self, actions):
+		"""actions is a dict of all the input events, like keyboard and mouse"""
+		if actions['key'] == "space":
+			spk("Hello world")
+</code></pre>
+
+<p>The advantage of writing our code this way is so we have access to self. We can also use the namespace of the function through self.</p>
+<pre>
+if __name__ == '__main__':
+		#call the run function for our app to begin the game loop. press escape to exit.
+		MyApp().run()
+</pre>
+And our app is running.
+Another thing we can do is right under our logic method creation, we can place a function to change the exit key from escape to alt f4:
+<pre>
+	def set_defaults(self):
+		self.exit_key = 2</p>
+</pre>
+
+<h2>Other important modules</h2>
+
+<p>There is a built-in cashing module, so you can store what ever you wish in there.</p>
+
+<h2>ui</h2>
+
+<p>The ui folder:
+<br/>
+pyaudiogame.ui
+<br/>
+has a list of frequently used scripts. There is a menu script and a typing script currently.
+To learn more about them, see the <a href=".API/index.html">API</a>
+under ui.</p>
