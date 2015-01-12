@@ -1,5 +1,4 @@
 #Has functions to do everything your engine module needs
-
 import pygame, random, sys
 from pygame.locals import *
 from speech import speak as spk
@@ -58,9 +57,10 @@ class App(object):
 		#create the game loop
 		while True:
 			actions = keys()
+			if actions == False:
+				break
 			running = logic(actions)
-			#This check is to see if either the actions returned False for a  hard-coded exit or if the logic function returned False. The break statement quits a while loop 100% of the time
-			if actions == False or running == False:
+			if running == False:
 				break
 			tick(fpsClock(fps))
 		self.quit()
