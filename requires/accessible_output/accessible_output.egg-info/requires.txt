@@ -1,0 +1,2 @@
+platform_utils
+pywin32

@@ -1,0 +1,16 @@
+setup.py
+platform_utils/__init__.py
+platform_utils/blackhole.py
+platform_utils/clipboard.py
+platform_utils/libloader.py
+platform_utils/paths.py
+platform_utils.egg-info/PKG-INFO
+platform_utils.egg-info/SOURCES.txt
+platform_utils.egg-info/dependency_links.txt
+platform_utils.egg-info/top_level.txt
+platform_utils/autostart/__init__.py
+platform_utils/autostart/windows.py
+platform_utils/shell_integration/__init__.py
+platform_utils/shell_integration/windows.py
+tests/__init__.py
+tests/test_paths.py

@@ -10,7 +10,7 @@ config = {
 	'download_url': 'https://codeload.github.com/frastlin/PyAudioGame/zip/master',
 	'author_email': 'brandonkeithbiggs@gmail.com',
 	'version': '0.01',
-	'install_requires': ['accessible_output2', 'pygame', 'pyinstaller'],
+	'install_requires': ['accessible_output2', 'pygame'],
 	#dependency_links=['hg+http://hg.q-continuum.net/accessible_output2'],
 	'packages': ['pyaudiogame'],
 	'scripts': [],
