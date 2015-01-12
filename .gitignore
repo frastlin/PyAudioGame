@@ -9,5 +9,5 @@
 /*.egg-info
 
 #markdown files in documentation
-/documentation/*.txt
-/documentation/Markdown.pl
+documentation/*.txt
+documentation/Markdown.pl
