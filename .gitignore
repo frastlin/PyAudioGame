@@ -2,6 +2,7 @@
 *.pyc
  #My personal files:
 stuff to do.txt
+.gitignore
 
 # Setuptools distribution folder.
 /dist/
