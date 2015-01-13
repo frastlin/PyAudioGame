@@ -12,11 +12,11 @@ from pyaudiogame.speech import speak as spk
 class Menu(object):
 	"""Used for creating a menu in your program"""
 
-	def __init__(self, options=["yes", "no"], default_position=0, keys={"navigation_back": "up", "navigation_forward": "down", "exit": ["escape", "backspace"], "except": "return"}, shortkeys=None, title="Test Menu", loops=True, persistent=0, sounds={}):
+	def __init__(self, options=["yes", "no"], default_position=0, keys={"back": "up", "forward": "down", "exit": ["escape", "backspace"], "except": "return"}, shortkeys=None, title="Test Menu", loops=True, persistent=0, sounds={}):
 		"""This creates a menu with the following values:
 			options: are what the user sees displayed. If you pass a list, all items will have the settings of font. if you pass a dict, the keys will be the options and the values will be font settings for each line, like the font argument.
 			default_position: the first selected option
-			keys: pass a string or a list of strings for each entry. navigation_back is if you were going up in the menu, navigation_forward is down in the menu, exit is to leave, except is to choose an option.
+			keys: pass a string or a list of strings for each entry. back is if you were going up in the menu, forward is down in the menu, exit is to leave, except is to choose an option.
 			shortkeys: Create a list of key names that is as long as the options list and pass it. For example ['1', '2', '3'] will activate options 0, 1 and 2 in the options list.
 			title: The text that is said before the menu. pass as None if you don't wish any.
 			loops: when using the keyboard, says if you will reach the bottom of the screen and do nothing or if you will loop back to the start. also vice-versa
@@ -45,7 +45,7 @@ class Menu(object):
 		self.ran = False
 
 		#default checks
-		default_key_dict = {"navigation_back": "up", "navigation_forward": "down", "exit": ["escape", "backspace"], "except": "return"}
+		default_key_dict = {"back": "up", "forward": "down", "exit": ["escape", "backspace"], "except": "return"}
 		[i.update({i: default_key_dict[i]}) for i in default_key_dict if not self.keys.get(i)]
 
 	def run(self, actions):
@@ -58,7 +58,7 @@ class Menu(object):
 		if not self.ran:
 			self.first_run()
 
-		if key in keys["navigation_back"] or key in keys['navigation_forward']:
+		if key in keys["back"] or key in keys['forward']:
 			self.key_checker(key)
 		elif key in keys['exit']:
 			result = self.exit_menu()
@@ -78,9 +78,9 @@ class Menu(object):
 
 	def key_checker(self, key):
 		"""checks what key it is and does stuff accordingly"""
-		if key == self.keys['navigation_back']:
+		if key == self.keys['back']:
 			self.change_position("add")
-		elif key == self.keys['navigation_forward']:
+		elif key == self.keys['forward']:
 			self.change_position('minus')
 		self.message = self.options[self.current_position]
 
@@ -120,7 +120,7 @@ class Menu(object):
 				p += 1
 		self.current_position = p
 
-def add_menu(actions, options=['Yes', 'No'], dict={}, name=None, result_list=[], default_position=0, keys={"navigation_back": "up", "navigation_forward": "down", "exit": ["escape", "backspace"], "except": "return"}, shortkeys=None, title="Test Menu", loops=True, persistent=0, sounds={}):
+def add_menu(actions, options=['Yes', 'No'], dict={}, name=None, result_list=[], default_position=0, keys={"back": "up", "forward": "down", "exit": ["escape", "backspace"], "except": "return"}, shortkeys=None, title="Test Menu", loops=True, persistent=0, sounds={}):
 	"""Call this function with a dict of actions and the name of a dict to append either the name or title to."""
 	if not name:name = title
 	if not dict.get(name):

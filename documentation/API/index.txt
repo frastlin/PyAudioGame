@@ -1,0 +1,18 @@
+<title>PyAudioGame API Index</title>
+
+#topics
+##PyAudioGame
+[app](app.html)
+[mixer](mixer.html)
+[UI](ui.html)
+[helper](helper.html)
+
+__________
+
+#About the API
+Here you will find links describing how the different sections of PyAudioGame work.
+If you haven't already, head over to either the
+[Beginner tutorial](../basic/index.html)
+or
+[advanced tutorial](../advanced/index.html)  
+to get an overview of how pyaudiogame works.
