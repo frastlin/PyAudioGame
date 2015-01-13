@@ -1,8 +1,10 @@
 # Compiled python modules.
 *.pyc
+
  #My personal files:
 stuff to do.txt
 .gitignore
+/my_stuff/
 
 # Setuptools distribution folder.
 /dist/
