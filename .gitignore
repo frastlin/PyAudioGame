@@ -14,7 +14,6 @@ stuff to do.txt
 /*.egg-info
 
 #markdown files in documentation
-documentation/**.txt
 documentation/Markdown.pl
 
 #The PyAudioGame.wiki
