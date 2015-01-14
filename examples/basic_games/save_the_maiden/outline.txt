@@ -1,0 +1,71 @@
+Save the maiden is a text adventure game.
+
+story:
+A village is under attack by an evil dragon. Up to this point the dragon had just been taking livestock and wild animals, but last night, it snatched a young maiden while she was on her morning walk.
+
+You are Quaznock, the mighty dragon slayer. Bad luck for the dragon, you happened to be going to your Grandmas when you stopped at the inn in the village where the maiden had been taken from. The villagers all begged you to help and because a couple of the most lovely of the lasses gave you those wide-eyed pleading glances you can never resist, and because, well it's a maiden you're saving, you said you would help.
+When you get to the dragon, you have a magic shield that protects you from the fire. If you don't put it in the right place when the flame comes, you will die.
+
+When you kill the dragon, you escort the maiden back to her village and claim your reward!
+
+Dialogue:
+
+"You take a sip of the chilly ail and sit back to relax after a long day in the saddle. Your grandma chose to live in the most distant, smallest village on the earth and you, being the poor, dutiful grandson that you are, make the trip each year to check up on her. You have been traveling for 3 days so far and you still have 2 to go. Before you left you had been given the title of 'The great filloter' by the king himself after slaying one of the kingdom's most fiercest dragons, so you are enjoying the bounties of your freshly filled gold purse around your waist."
+"As you give a sigh of contentment, you notice some of the village men getting together around a table where there is a young woman crying. You, being a sucker for crying women jump up and stride over."
+"As you reach their table, you demand: 'What is going on here?'"
+"To your bewilderment the poor woman starts crying harder and the men all stair at you with some hostility and annoyance."
+"One of the men stands up and says: 'Sir, I I do not know who you are, but I must ask you to mind your own business. Our village has some troubles and I very much doubt you can be of any help.'"
+"You puff out your chest and in your most grandiose voice exclaim: 'I am Quaznock, the mighty dragon slayer. Freshly anointed the title of great fillitor by the high king himself. I am much more than I appear to be.'"
+"To your pleasure and bewilderment, the young woman, when hearing your title, springs up, knocking her chair over and nearly tackles you in her enthusiasm."
+"Between her sobs and frantic pleading, you make out that a dragon has been terrorizing the village"
+"It is not your job to randomly slay dragons, but this woman was brushing up against you in all the right places and she was looking at you with those doe-eyes that means that she will do anything if you help her."
+"So what do you do?"
+"Press y to help or press n to extract yourself and continue onto grandmas"
+
+n
+"You really needed to get to grandmas and after all, what honors would be given you if you slayed a dragon this far away from the capital? These are just some villagers, who cares about them anyways? You shrug off the frantic woman and ignoring her pleas and the grasping hands of the men, you exit the tavern, get on your horse and ride away."
+y
+"To your surprise, you hear yourself agree to slay the dragon. The woman leads you to her chair and sits you down in it. Then to your delight, she sits on your lap and snuggles into your arms. She drys her tears with the hem of her dress and begins:"
+"'For the last two months our lands have been ravaged by an evil red dragon. Until last night, it had been killing livestock and burning crops. My father, the mayor, has sent messages to the capital, but no one has returned."
+"But last night, my sister went out to get water for washing and while she was drawing up the bucket, the dragon flew up and snatched her. I saw it from the window. It was horrible! it was big, ugly with red scales all along its body. It looked like it wanted to eat my sister!'"
+"The young woman began to cry again. You, being the gallant dragon slayer, rub her arms and murmur comforting words to her."
+"'I will slay that dragon, have no fear. Just tell me where he is living and you will be eating dragon stew for dinner tonight!'"
+"The woman, taking a hold of herself, pulls out a piece of paper and starts telling you how to get to the dragon lair."
+"'It is up here, on the ridge over the bluffs. He lives in the large cave that you can see from the trail.'"
+"You nod in agreement and say 'He will be dead tonight'"
+"The woman turns to you and gives you a long lingering kiss on the lips and whispers 'I will be waiting'"
+"You go to your room, gather your stuff and head out."
+"Press the arrow keys to move"
+right or left
+"You ride for about 5 minutes, but don't see any bluffs, just the king's rode. You return to where you started."
+back
+"You turn your horse to go to the south, but after riding past the houses, you see a thick forest. No bluffs in there."
+up
+"You ride down the path and see a large bluff in front of you. You slow down and just like the woman said, there is a large cave just off the path."
+"You go over how to fight a dragon in your mind:"
+"A dragon breathes fire and if you don't shield yourself before you attack, you will die."
+"Press s to shield"
+"You dismount and enter the lair"
+"You sneak into the cave, every sense on high alert. At first you don't see anything but a ton of old bones. But then you see the dragon. sleeping curled  around who you take to be the maiden. The girl looks a bit worse for ware, but you still admire that she looks even more ravishing than her sister. You think to yourself, maybe there is something to helping villagers."
+"You take a grip on your sword and with a loud 'hua' attack the dragon."
+
+attack message:
+above 50 hp
+"You swing your sword at the dragon, slicing and doing %s damage on one of its more tender parts"
+less than 50 and greater than 10
+"Feeling bold, you stab the dragon , aiming for it's heart, doing %s damage"
+"sensing victory, you give one mighty heave and bring your sword crashing down on the dragon's neck, slicing it cleanly from the creature's shoulders."
+
+death
+The dragon, sensing that your defense is down, spews out a huge gout of flame searing you to a crisp."
+"You're crispy Joe, sadly no mo"
+
+after
+"You go over to the maiden and gently help her to walk down to your horse. You hoist her up, admiring how her dress hikes up her leg, and lead her into the village."
+"As you enter into the square, the whole village begins to cheer. You are lifted up by some of the more Bronny men and are carried into the tavern where you are then set down and plied with all kinds of food and drink."
+"About half-way through the meal, the two sisters enter, both cleaned up and sparkling in their finest dresses."
+"Your hand loosens on your ail mug as you stair at them both, two of the most beautiful women you've ever seen in your life. Before you know it, you hear a crash as your mug hits the floor."
+"Everyone stops talking and looks at you. Then everyone begins to laugh."
+"The two girls come over to you, deftly avoiding the spilled ail."
+"The first one you met snuggles up against you and whispers: 'we still have to properly thank you...'"
+"Later that night, as you drift off to sleep, you think to yourself how nice it is being a hero."

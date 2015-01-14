@@ -27,7 +27,7 @@ class Grid(object):
 
 	def add_wall(self, min_x=1, max_x=10, min_y=5, max_y=5):
 		"""Adds a Wall object to the object list"""
-		new_wall = Wall(min_x, max_x, min_y, max_y))
+		new_wall = Wall(min_x, max_x, min_y, max_y)
 		self.objects.append(new_wall)
 		return new_wall
 

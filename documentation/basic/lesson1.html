@@ -1,0 +1,122 @@
+<p><title>lesson1: you're very able -- basic_tutorial</title></p>
+
+<p><a href="index.html">Back to index</a></p>
+
+<hr />
+
+<h1>Variables</h1>
+
+<p>In our lives we like to name things. For example, just take keyboard and computer. When someone says "keyboard", other people know what they mean. They don't have to describe keyboard each time they meet someone and the word "keyboard" comes up in their conversation. Same goes for computer. Just think what would happen if we had to describe keyboard and computer to someone when ever we wanted to say: "My letter h is broken on my keyboard" It would go something like:</p>
+
+<blockquote>
+  <p>My letter h is broken on the mechanical piece where I hit letters whitch get transfered to a central processing system that takes my key presses, turns them into numbers, saves those numbers, then prints them out to a lighted display...  </p>
+</blockquote>
+
+<p>You get the picture. It's much nicer to use the shorter words like keyboard and computer. <br />
+In programming we have the same idea. We call these names: <br />
+variables <br />
+You make a variable by typing your name (without quotes), then writing an equals sign, then the thing you wish to assign. For example, lets assign the number 10 to a name: <br />
+<code>my_number_of_apples</code> = 10 <br />
+Now, when writing code, we can say <code>my_number_of_apples</code> rather than just writing 10. If you were talking to someone and said: <br />
+My 10 is greater than your 10. <br />
+Do you think he would know what you were talking about? If you heard a recording of that phrase two weeks later do you think you would know what you were talking about? Maybe, but if the phrase looked like: <br />
+<code>my number_of_apples is grater than your_number_of_apples</code> <br />
+everyone would have a much better chance of understanding you. <br />
+*a note about variable names*
+It is common practice for variables to have their words either seperated by underline <code>"_"</code> or have the first letter of a word capitalised LikeThis. <br />
+Why not have variable names with spaces? <br />
+Because, in programming, a space means you have left that little piece of code behind. Python, in poticular does not like spaces. <br />
+So lets see some examples of "variables": <br />
+Save the following code in a file named ex1.py  </p>
+
+<h1>code</h1>
+
+<pre><code>#Working with variables
+#remember this is magic and mumbojumbo for now
+import pyaudiogame
+spk = pyaudiogame.speak
+MyApp = pyaudiogame.App("My Application")
+
+#Here are some variables
+#Lets first write one line of text
+my_name = "Frastlin"
+
+#now lets write a number
+my_age = 42
+
+#now lets write several lines of text
+my_song = """
+My application tis to be,
+the coolest you've ever seen!
+"""
+
+#Some more magic!
+def logic(actions):
+    key = actions['key']
+    if key == "a":
+        #Here is our one line of text, it will speak when we press a
+        spk(my_name)
+    elif key == "s":
+        #Here is our number, it will speak when we press s
+        spk(my_age)
+    elif key == "d":
+        #Here is our multiline text example. It will speak when we press d
+        spk(my_song)
+
+MyApp.logic = logic
+
+MyApp.run()
+</code></pre>
+
+<h1>what you should see</h1>
+
+<p>If you press a you should hear: <br />
+frastlin <br />
+if you press s you should hear <br />
+42 <br />
+if you press d you should hear <br />
+My application tis to be, <br />
+the coolest you've ever seen!  </p>
+
+<h1>What does the code mean?</h1>
+
+<p>when we made the variable: <br />
+<code>my_name</code> <br />
+we said it equaled "frastlin". That quote tells python that that word is text and not another variable. <br />
+In fact, if you changed them around and typed: <br />
+frastlin = <code>"my_name"</code> <br />
+it would still work. You just need to change the line in the magic area that looks like:  </p>
+
+<pre><code>#Here is our one line of text, it will speak when we press a
+spk(my_name)
+</code></pre>
+
+<p>to</p>
+
+<pre><code>#Here is our one line of text, it will speak when we press a
+spk(frastlin)
+</code></pre>
+
+<p>But what is going on with the song variable? <br />
+Where as "frastlin" was telling python there was text there, it would not have worked if we would have typed: <br />
+"frast <br />
+lin" <br />
+If you try to run that, you will get: <br />
+SyntaxError: EOL while scanning string literal <br />
+This means that it saw "frast and thought you forgot a quote. <br />
+Having three quotes, """, tells python to look past a line break for the matching 3 quotes. <br />
+Take the 
+"frast <br />
+lin" <br />
+and write it like: <br />
+"""frast <br />
+lin""" <br />
+That should run and you can hear that it is two words.  </p>
+
+<p>Play around with this for a little while. Change your name and age to be what your name and age are really and then write something more interesting in the song variable.  </p>
+
+<h1>extra credit</h1>
+
+<ol>
+<li>Look at the magic sections. see if you see anything that looks like a variable. If so, change it in every location to be something new. I'll give you a hint, there are 3. There is also one that kind of looks like one, but won't work if you change all of it.</li>
+</ol>
