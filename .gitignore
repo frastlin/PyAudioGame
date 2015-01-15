@@ -7,3 +7,4 @@ documentation/Markdown.pl
 documentation/documentation.txt
 !documentation/
 !*.html
+!*.md
