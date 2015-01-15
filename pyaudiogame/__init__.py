@@ -1,4 +1,3 @@
 from app import App
-import mixer, cash
-import ui
+#import mixer, cash
 from speech import speak

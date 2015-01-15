@@ -1,2 +1,2 @@
-tests
 platform_utils
+tests
