@@ -2,9 +2,11 @@
 !.gitignore
 
 
+!website/*
 !documentation/*
 documentation/Markdown.pl
 documentation/documentation.txt
 !documentation/
+!website/
 !*.html
-!*.md
+*.md
