@@ -8,7 +8,9 @@ In just a few lines of code, you can have a game window running and a place for 
 You can download pyaudiogame from
 [The Git Releases page](https://github.com/frastlin/PyAudioGame/releases)  
 or, if you would like to get all the new updates  
-[go here for the latest git version](https://github.com/frastlin/PyAudioGame)
+[go here for the latest git version](https://github.com/frastlin/PyAudioGame)  
+Also checkout  
+[The official website for the latest news](http://frastlin.github.io/PyAudioGame/)
 
 <h1>Requirements</h1>
 Most of what you need is in requires/. Just go in there and run:  
@@ -42,3 +44,6 @@ app.run()
 <br/><br/>  
 
 Now run the above code and press space to hear "Hello world"  
+#Documentation
+[See the documentation page](documentation/documentation.html)  
+There you can find guides and the API.
