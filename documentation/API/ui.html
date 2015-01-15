@@ -1,0 +1,165 @@
+<p><title>pyaudiogame.ui -- PyAudioGame API</title></p>
+
+<p><a href="index.html">API</a></p>
+
+<hr />
+
+<h1>pyaudiogame.ui</h1>
+
+<p>pyaudiogame.ui <br />
+PyAudioGame's prebuilt interfaces.  </p>
+
+<table border=1>
+<tr>
+<td>pyaudiogame.ui.Menu</td>
+<td>Creates a menu object with options one can scroll through using the keyboard.</td>
+</tr>
+<tr>
+<td>pyaudiogame.ui.Typer</td>
+<td>Creates a Typer object which handles text input.</td>
+</tr>
+<tr>
+<td>pyaudiogame.ui.Grid</td>
+<td>Makes a grid and has functions for map creation.</td>
+</tr>
+</table>
+
+<h2>description</h2>
+
+<p>pyaudiogame.ui provides classes to perform some of the more common tasks in game development such as creating menus, diologues and maps.</p>
+
+<h2>class pyaudiogame.Menu</h2>
+
+<p>Creates a class which can handle keyboard input to navigate a menu <br />
+    Menu(options=["yes", "no"], default_position=0, keys={"back": "up", "forward": "down", "exit": ["escape", "backspace"], "except": "return"}, shortkeys=None, title="Test Menu", loops=True, persistent=0, sounds={})  </p>
+
+<ul>
+<li>options <br />
+a list of strings that the user sees. One of these will be returned from the run function.  </li>
+<li><code>default_position</code> <br />
+The option number the menu will first start out on. All numbering starts from 0.  </li>
+<li>keys <br />
+Dict of keys for each action. Either a list of key names or a single key name is required. Not all keys need to be called. <br />
+keys: <br />
+*<code>['back']</code>  the key that is used to go up or left through a menu, default is "up" <br />
+*<code>['forward']</code> the key that is used to go down or right through a menu. Default is "down" <br />
+*<code>['exit']</code> The key that is used to get out of the menu. This returns "exit" from the run function. Default keys are "escape" and "backspace" <br />
+*<code>['except']</code> The key that will choose an option and returns it from the run function. Default key is "return"  </li>
+<li>shortkeys <br />
+*not working* <br />
+If a list of keys is passed that is the same size as the options list, then when the user presses the key, they will jump to the corresponding item in options and return it.  </li>
+<li>title <br />
+The message that the user hears when the menu first opens.  </li>
+<li>loops <br />
+If set to true, when the user goes back from the first option, they will cycle to the last option. The same goes when the user is on the last option. If they go forward, they will go back to the first option again.</li>
+<li>persistent <br />
+This argument determines when and if the player's position in the menu will be saved. There are 3 states: <br />
+0 does not remember anything. The player will always go back to the <code>default_position</code> <br />
+1 Is only remembered on exit. So if the user backs out of the menu and then returns, they will be in the same place as before. But if they hit except on that option, their position will go back to <code>default_position</code> <br />
+2 remembers only on selection. So if the user backs out of the menu and goes back in, their position will be back at <code>default_position</code>. But if they hit except on an option, if they go back, their last selection will be the one selected. <br />
+3 remembers both on exit and on except. So if the user exits the menu and comes back, they will be on their last position. If they hit except, they will land back on that option if they come back.</li>
+<li>sounds <br />
+*not working* <br />
+has 3 keys: <br />
+*<code>['change']</code> for when the back or forward keys are pressed <br />
+*<code>['exit']</code> for when the exit key is pressed <br />
+*<code>['except']</code> for when the except key is pressed  </li>
+</ul>
+
+<p><br/><br/>  </p>
+
+<table border=1>
+<tr>
+<td>Menu.run</td>
+<td>Runs the menu and will speak the options.</td>
+</tr>
+</table>
+
+<h3>run</h3>
+
+<p><code>run(actions) -&gt; choice</code> <br />
+Will run the menu. It will return the option the user selects. Otherwise it will return None. If the user hits the exit key, "exit" will be returned.
+Pass it the actions dict from the logic function. <br />
+otherwise, the only key it pulls from the dict is <code>['key']</code>.  </p>
+
+<h2>class pyaudiogame.Typer</h2>
+
+<p>Creates a box which handles typing. <br />
+<code>Typer(title="", valid_characters=['letters_simple', 'capitals', 'numbers', 'punctuation_simple'], multiline=False, length=0, current_string="")</code>  </p>
+
+<ul>
+<li>title <br />
+The text that the user hears when the edit box opens. It is not editable by the user.</li>
+<li><code>valid_characters</code> <br />
+pass it a list of keys from the <code>Typer.character_sets</code> dict. Default sets are: <br />
+*'numbers' numbers from 0-9 <br />
+*<code>'letters_simple'</code> no capital letters <br />
+*'capitals' all capital letters <br />
+*<code>'punctuation_simple'</code> <code>.,-_'\"</code> <br />
+*<code>punctuation_medium'</code> <code>\/[]</code>=-` <br />
+*note* not all the shifted punctuation work yet.</li>
+<li><code>multiline</code> allows for users to hit "return" to get a newline character.</li>
+<li>length limits the length of the string. so if it was 5, the user could only type 5 characters. set it to 0 for no limit.</li>
+<li><code>current_string</code> is default text that is typed in the edit box before the user enters anything. <br />
+<br/><br/></li>
+</ul>
+
+<table border=1>
+<tr>
+<td>Typer.run</td>
+<td>Runs the typer and searches for valid characters to put into the box</td>
+</tr>
+</table>
+
+<h3>run</h3>
+
+<pre><code>run(actions) -&gt; text string
+</code></pre>
+
+<p>This returns a text string when the user hits except. <br />
+pass in a dict with the "key" item in it. Prefferably the one from App.logic.  </p>
+
+<h2>class pyaudiogame.Grid</h2>
+
+<p>Creates a grid, primarily for map creation. <br />
+<code>Grid(width=50, height=50)</code>  </p>
+
+<ul>
+<li>width <br />
+The width of the grid  </li>
+<li>height <br />
+The height of the grid  </li>
+</ul>
+
+<p>Note that what happens is that a grid object is created and it has info about stuff you put in that grid, like walls and whatnot.  </p>
+
+<table border=1>
+<tr>
+<td>Grid.check</td>
+<td>Checks if there is an object in that location</td>
+</tr>
+<tr>
+<td>Grid.add_wall</td>
+<td>Adds a wall object to the grid</td>
+</tr>
+</table>
+
+<h3>check</h3>
+
+<p><code>check(x, y) -&gt; bool</code> <br />
+Run this to check if the point at (x, y) is in an object. If yes, this function returns True.</p>
+
+<h3><code>add_wall</code></h3>
+
+<p><code>add_wall(min_x=1, max_x=10, min_y=5, max_y=5) -&gt; WallObject</code>  </p>
+
+<ul>
+<li><code>min_x, max_x</code> <br />
+The width of the wall.</li>
+<li><code>min_y, max_y</code> <br />
+the height of the wall.  </li>
+</ul>
+
+<p>*note* <br />
+a Wall consists of the length of the x Wall and the length of the y Wall. so if you draw a line from the <code>min_x</code> to the <code>max_x,</code> that is how wide the wall will be. If you do the same to the <code>min_y</code> and <code>max_y</code> lines, you will get the height of the wall. <br />
+So a wall that is 1,10 and 5,5, will be 10 squares long and 1 square high. A pretty clasic wall.</p>

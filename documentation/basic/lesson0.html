@@ -1,0 +1,70 @@
+<p><title>lesson 0: hello world -- PyAudioGame basic tutorial</title>
+<a href="index.html">Back to index</a></p>
+
+<hr />
+
+<h1>What to do</h1>
+
+<p>In this tutorial you will be given code and you need to type it, using your text editor and save it as a .py file. You need to type every example before going ahead, don't copy and paste anything but the template.</p>
+
+<h2>template</h2>
+
+<p>Save this because this is what we will be using for every lesson and what you will be using for every App</p>
+
+<h2>template</h2>
+
+<pre><code>#This is the description of the file. This is a template for an app.
+import pyaudiogame
+spk = pyaudiogame.speak
+MyApp = pyaudiogame.App("My Application")
+
+#put code here
+
+def logic(actions):
+    key = actions['key']
+
+MyApp.logic = logic
+MyApp.run()
+</code></pre>
+
+<h2>what to add</h2>
+
+<p>When you need to enter code, enter it where you see the line:  </p>
+
+<pre><code>#put code here
+</code></pre>
+
+<p>The # sign in python is what we call a comment. You can put normal English after the code and the computer will just ignore it. Comments are used to remind you what you did. If someone else reads your code, they can figure out what you did by reading your comments. <br />
+Now we will create an application that will say "Hello World" when you hit space. <br />
+Why "Hello world"? <br />
+What else is a newborn application supposed to say? <br />
+Type the following under the comment and save it as <code>hello_world.py</code></p>
+
+<h2>code</h2>
+
+<pre><code># lets make some game logic
+def logic(actions):
+    """Our game logic function that gets run every iteration of our app's running loop"""
+    key = actions['key']
+    if key == "space":
+        spk("Hello world")
+</code></pre>
+
+<h2>what you should see</h2>
+
+<p>To run this, open up your command line and type: <br />
+<code>python hello_world.py</code> <br />
+If you have everything configured correctly you should see a black window where hitting any of the letters does nothing, but when you hit space, your screen reader or SAPI will say: <br />
+"Hello World"</p>
+
+<p>To exit hit escape. <br />
+<br/> <br />
+If this is not what you have, read through the above example and template. make sure you have every capital right, all the indentation correct (under the line def logic(actions): there is 4 spaces, you need them. The lines below that line need them too. The spk line needs 8 spaces!). <br />
+Keep working till you get it write. <br />
+Those spaces are what we call indentation. It is used to seperate out different sections of code. <br />
+for now, just use either spaces or the tab key. It does not matter how many spaces you use, just as long as the perporsions say the same. So for that line that has 8 spaces, it could have 2 spaces and the line above it could have 1 space. But in my oppinion tabs are easier, so from now on that is what will be used.</p>
+
+<h2>Congrats!</h2>
+
+<p>Congrats, you ran your first app! Give yourself a pat on the back, for you have taken the first step to creating your own games! <br />
+If you don't understand anything about what we just did, it's OK. For now, it's magic!  </p>

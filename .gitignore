@@ -1,0 +1,12 @@
+*
+!documentation/*
+documentation/Markdown.pl
+documentation/documentation.txt
+
+!documentation/
+!.gitignore
+!*.html
+
+#!/documentation/
+#!documentation/**/*.html
+
