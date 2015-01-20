@@ -5,6 +5,9 @@ from speech import speak as spk
 #our program spacific modules:
 import ticker
 
+#This is a global event queue
+event_queue = ticker.Scheduler(time_format=0.001)
+
 class App(object):
 	"""This is to subclass for an application."""
 
@@ -23,7 +26,7 @@ class App(object):
 		#If the mouse should be visible or not
 		self.mouse = False
 		#Our event queue
-		self.event_queue = ticker.Scheduler(time_format=0.001)
+		self.event_queue = event_queue
 		#A hard-coded exit key, 1 is escape, 2 is alt + f4 and 0 is nothing **WARNING** if there is no exit key you need to go to command prompt window and hit ctrl + c to exit the window!
 		self.exit_key = 1
 
@@ -49,7 +52,7 @@ class App(object):
 		fpsClock = pygame.time.Clock().tick
 		fps = self.fps
 		#tick is for events that are scheduled
-		tick = self.event_queue.tick
+		tick = event_queue.tick
 		#The game logic
 		logic = self.logic
 		#Returns events like key presses and mouse movement and we use it in our game logic
@@ -86,7 +89,9 @@ class App(object):
 			'mousey': 0,
 			'key': None,
 			'mouseClicked': False,
-			'mods': []
+			'mods': [],
+			'state': None,
+			'keyUp': None
 			}
 		for event in pygame.event.get():
 			if event.type == MOUSEMOTION:
@@ -95,7 +100,12 @@ class App(object):
 				actions['mousex'], actions['mousey'] = event.pos
 				actions['mouseClicked'] = True
 			elif event.type == KEYDOWN:
+				actions['state'] = "down"
 				actions['key'] = pygame.key.name(event.key)
+				actions['mods'] = mod_id.get(pygame.key.get_mods(), [])
+			elif event.type == KEYUP:
+				actions['state'] = "up"
+				actions['keyUp'] = pygame.key.name(event.key)
 				actions['mods'] = mod_id.get(pygame.key.get_mods(), [])
 			if event.type == QUIT or (actions['key'] == "escape" and exit_key == 1) or ('alt' in actions['mods'] and actions['key'] == 'f4' and exit_key == 2):
 				return False

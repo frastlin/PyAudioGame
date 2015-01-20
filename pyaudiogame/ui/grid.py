@@ -23,22 +23,24 @@ class Grid(object):
 		"""Call this to see if there is an object"""
 		for o in self.objects:
 			if x >= o.min_x and x <= o.max_x and y >= o.min_y and y <= o.max_y:
+				if o.run:
+					return o.run()
 				return True
 
-	def add_wall(self, min_x=1, max_x=10, min_y=5, max_y=5):
+	def add_wall(self, min_x, max_x, min_y, max_y, run=None):
 		"""Adds a Wall object to the object list"""
-		new_wall = Wall(min_x, max_x, min_y, max_y)
+		new_wall = Wall(min_x, max_x, min_y, max_y, run)
 		self.objects.append(new_wall)
 		return new_wall
 
-
 class Wall(object):
 	"""This just has the properties for basic Wall objects"""
-	def __init__(self, min_x, max_x, min_y, max_y):
+	def __init__(self, min_x, max_x, min_y, max_y, run=None):
 		self.min_x = min_x
 		self.max_x = max_x
 		self.min_y = min_y
 		self.max_y = max_y
+		self.run = run
 
 	def __repr__(self):
 		"""Call this class to see the below returned"""
