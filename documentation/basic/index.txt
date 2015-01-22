@@ -2,7 +2,7 @@
 
 #chapters
 
-[Getting started](getting_started.html)
+[Getting started](gettingstarted.html)
 [lesson 0: Hello World](lesson0.html)
 [lesson1: you're very able](lesson1.html)
 [Lesson 2: lets get funcky!](lesson2.html)

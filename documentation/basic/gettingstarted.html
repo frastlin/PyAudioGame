@@ -1,0 +1,110 @@
+<p><title>Getting Started -- Basic Tutorial</title></p>
+
+<p><a href="index.html">Back to index</a></p>
+
+<hr />
+
+<h1>What you need</h1>
+
+<p>To do this tutorial you will need
+<a href="https://www.python.org/download/releases/2.7.8/">python 32 bit</a> or the full install of pyaudiogame with the pyaudiogame.bat file <br />
+and a <br />
+<a href="http://www.EmpowermentZone.com/edsetup.exe">text editor.</a> <br />
+*Note* You can use python 2 or 3 with this tutorial and package, you just need to make sure you have all the correct dependencies for pyaudiogame to work. (Those include all the packages in requirements and <a href="http://pygame.org/news.html">pygame).</a> <br />
+if you are using the included python distribution, you don't need to worry, everything is installed for you.</p>
+
+<h1>how to run scripts</h1>
+
+<p>Python files with your code are called "scripts" so when you hear "run the script" it is the same as "run the code".  </p>
+
+<h2>saving</h2>
+
+<p>You save a python script as a .py file. If you are using a text editor such as EdSharp or notepad, they will often give a default extension like .txt. You need to change this when you type the name of your document. hit ctrl+a while you are in the filename box and then type your document's name and type .py, so like: ex1.py. <br />
+If you use a word processor like Microsoft Word, they won't let you do this. They will also fill your documents with symbles that python won't like such as leftQuote rather than quote.  </p>
+
+<h2>using the command shell</h2>
+
+<p>After you have your .py file, open up a command shell by either clicking on the pyaudiogame.bat file, hitting <code>ctrl+\</code> in EdSharp, or by navigating to the place where you saved your file with windows explorer, hitting alt+d and typing "cmd" and hitting enter. <br />
+Use your screen reader's review cursor (Jaws cursor or NVDA's object navigation) to read this window. Check that your current directory  is where you saved your .py file. If it isn't, type <br />
+cd projects <br />
+if you are using the pyaudiogame.bat file, or <br />
+cd programming/python/pyaudiogame/excersizes <br />
+where the / seperates folder names. If you don't know, hit f4 when in windows explorer and it will say something like: <br />
+<code>c:\users\frastlin\programming\pythonFiles\projects\PyAudioGame\projects</code> <br />
+If it makes you feel better, use <code>\</code> after cd, but <code>/</code> is more excepted as you can use it on any system where as <code>\</code> is only windows. <br />
+If your extension has spaces like: <br />
+<code>c:\Program Files (x86)</code> <br />
+put it in quotes after cd like: <br />
+<code>cd "c:\Program Files (x86)"</code> <br />
+So if your windows explorer says something like: <br />
+<code>c:\programming\pythonFiles\PyAudioGame\projects</code> <br />
+and your command prompt window says: <br />
+<code>c:\programming\pythonFiles\PyAudioGame</code> <br />
+you type: <br />
+cd projects <br />
+If you wish to go back out of the folder you are in, type: <br />
+cd ..</p>
+
+<h2>running the .py file</h2>
+
+<p>Once you have your command shell open at the correct location, type: <br />
+python filename.py <br />
+to run filename.</p>
+
+<h1>useful things to know about python</h1>
+
+<p>When you are in a command shell, you can type <br />
+python <br />
+without any file name to get into what is called the "python interpreter". This is basicly a text file where you can type python commands and see them exicuted right away.  </p>
+
+<h2>environment variables</h2>
+
+<p>If you installed python and are not using the pyaudiogame.bat file, you need to set python in the environment variable before the "python" command will work. <br />
+First hit the windows key to get into the start menu. arrow down once and hit c till you hear "computer". Hit applications (or right-click) on this and arrow up for properties. Hit enter. <br />
+In the "system" window tab till you hear "change settings". In windows 7 this is 3 times. Hit enter. <br />
+In the computer properties window hit ctrl+tab till you hear "advanced" <br />
+*note*You need to be logged in as an administrator to go past this point <br />
+tab till you hear "environment variables..." and hit enter. <br />
+now tab 4 times and you should hear "system variables". Arrow down 4 times and you will hear "path;". Hit alt+i. <br />
+*warning warning warning!!!!* If you delete anything in here, it will do bad things to your computer, so be very careful! Hit escape and do the process over if you delete something. <br />
+in the edit system variable diologue hit ctrl+end to get to the last entry. Hit left arrow to check if there is a <code>;</code> at the end of the last character. If not add one. Now type: <br />
+for python 2.7 <br />
+;c:\python27;c:\python27\scripts <br />
+for python 3.4 do: <br />
+;c:\python34;c:\python34\scripts <br />
+Now tab once and hit the OK button. Tab till you hear the OK button again and hit enter. Hit tab once and hit the OK button again. Now open up a command shell and type <br />
+python <br />
+if you get: python is not recognised as an internal or external command, operable program or batch file. <br />
+restart your computer and try it again. <br />
+If it still doesn't work, go to computer, OSc (c:) and hit p till you hear "python". if it has a different number at the end than what you typed, change it in your environment variable by following the steps above.  </p>
+
+<h2>notes on EdSharp</h2>
+
+<p>EdSharp is a very complex and fantastic text editor that is built for blind programmers. The user guide is very long and very detailed and is a little more than what most people would like to sit down and read. So here are some of the more useful commands and settings you should set:  </p>
+
+<h3>settings</h3>
+
+<p>hit alt+shift+c <br />
+extension default should be either: <br />
+* <br />
+or <br />
+.py <br />
+indent unit should be: <br />
+\t <br />
+word wrap <br />
+n <br />
+extra speech: <br />
+y  </p>
+
+<h3>commands</h3>
+
+<p>tab anywhere in a line to indent it <br />
+press ctrl+return to indent the next line the same amount as the last line <br />
+You can select a block of code and press tab to indent and shift+tab to unindent everything. <br />
+You can select a block of code and press ctrl+q to quote and ctrl+shift+q to unquote the code. <br />
+To jump between blocks of code press ctrl+up and ctrl+down arrows <br />
+To open up a command prompt press ctrl+\ <br />
+To open up file explorer press alt+\ <br />
+to delete the current line of code press ctrl+d <br />
+press ctrl+c without selecting to copy the current line <br />
+You can use expressions like <code>\t, and \n</code> in your replace or search options.    </p>

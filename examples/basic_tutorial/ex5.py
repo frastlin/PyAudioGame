@@ -1,4 +1,4 @@
-#This is the description of the file. This is a template for an app.
+#fraught with possibility
 import pyaudiogame
 import random
 import ex5_1
