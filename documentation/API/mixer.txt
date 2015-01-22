@@ -1,0 +1,32 @@
+<title>pyaudiogame.mixer -- PyAudioGame API</title>
+
+[API](index.html)
+
+__________
+#pyaudiogame.mixer
+The main module for handling sound playback.
+Currently the mixer is taken strait from:  
+[pygame's mixer module](http://www.pygame.org/docs/ref/mixer.html#pygame.mixer.get_num_channels)  
+Their documentation is much better than mine, so if you wish to learn how sound works, read their documentation.  
+\*note\*
+if you wish to play music, you need to use the mixer.music module. read:  
+[The music tutorial](http://www.pygame.org/docs/ref/music.html)
+
+##cheetsheet
+To create a sound create it using:  
+mySound = Sound("filename")  
+to play it do:  
+mySound.play()  
+
+To pan the sound create a Channel object by doing:  
+myChannel = Channel(1)  
+Then add the sound to the channel like:  
+myChannel.play(mySound)  
+Then set the panning by doing  
+`myChannel.set_channel(0, 1)`  
+The first number is left and the second number is right. the numbers are from 0 to 1. If there is just the first number, the sound will be full on both speakers.  
+<br/>  
+to load a song to the music module type:  
+mixer.music.load("filename")  
+to play it type:  
+mixer.music.play()    

@@ -1,0 +1,36 @@
+<title>PyAudioGame Documentation</title>
+
+#refferense links
+* [API](API/index.html)
+* [Basic Tutorials](basic/index.html)
+* [Advanced Developer Tutorial](advanced/index.html)
+<br/>
+
+#About
+PyAudioGame is a toolkit for writing audio games in python.
+It is cross-platform and open-source.
+##Getting started
+PyAudioGame is built for both newbie and advanced programmers in mind. 
+If you're someone who has never seen python code, or code in general, take a look at [The newbie tutorial.](basic/index.html)
+If you are comfortable in python already and just wish to learn about how pyaudiogame is setup, head on over to [the advanced tutorials](index.html) and see how some games are built.
+##Installing
+There are two ways to run pyaudiogame:
+
+1. \*in progress\* Download the complete development environment and open up the pyaudiogame.bat file. navigate to your script and run python myscript.py and everything will be loaded.
+2. Download the [zipped package](https://codeload.github.com/frastlin/PyAudioGame/zip/master) from the
+[GitHub page,](https://github.com/frastlin/PyAudioGame)
+open a command-line console and run python setup.py install.
+
+##Licence
+pyaudiogame is open-source and under the mit licence.
+This means you can do what ever you wish with it!
+##Support
+If you have problems, either post your question on our mailing list \*under development\* or post your question in the developer's room at [audiogames.net](http://forum.audiogames.net/viewforum.php?id=28)
+<br/>
+If you have an idea for a feature or find a bug, please [submit a git issue.](https://github.com/frastlin/PyAudioGame/issues)
+##development
+If you have a module or user interface you think other people should have, make sure it is free of bugs and submit it to the user repository with an extensive readme and documentation.
+\*under development\*
+If you would like to submit code to the core package, please clone your copy of the [master branch.](https://github.com/frastlin/PyAudioGame.git)
+\*under development\* Create your own branch and push it to be reviewed.
+

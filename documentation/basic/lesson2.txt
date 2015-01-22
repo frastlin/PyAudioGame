@@ -1,0 +1,126 @@
+<title>Lesson 2: lets get funcky!  -- basic tutorial</title>
+
+[Back to index](index.html)
+
+__________
+
+#Lets get funcky!
+I know you wanted to dance, but we are doing something more exciting, we are making functions!!!  
+Wait, you are not jumping for joy? Well soon you will be!  
+#code
+
+	#Many funcky functions!
+	import pyaudiogame
+	spk = pyaudiogame.speak
+	MyApp = pyaudiogame.App("My Application")
+	
+	#Our first function we will call funky
+	def funky():
+		spk("Hello, I'm funky!")
+	
+	#Lets make some variables
+	player1_level = 99
+	player2_level = 92
+	
+	#and lets make a function to say our player's levels
+	def say_level(player_level):
+		spk("I am level ")
+		spk(player_level)
+	
+	#Now lets make a not so magic function that is filled with magic!
+	def logic(actions):
+		key = actions['key']
+		if key == "space":
+			funky()
+		elif key == "1":
+			say_level(player_level=player1_level)
+		elif key == "2":
+			say_level(player2_level)
+	
+	MyApp.logic = logic
+	
+	MyApp.run()
+
+#What you should see
+If you press space you should hear:  
+Hello, I'm funky!  
+if you press 1 you should hear  
+I am level  
+99  
+and if you press 2 you should hear  
+I am level  
+92  
+
+#So, what's a function
+It is simple.  
+a function is a block of code with a name.  
+But wait, that sounds like a variable. Why do you call a code and something like text or a number something else?  
+One reason:  
+a function can do several lines of code repeatedly.  
+Where as a variable points to a spacific number, a function does not really have a set value. It can, but then you may as well use a variable.  
+#So what does a variable look like?  
+You see them in our code. The first one looks like:
+
+	def funky():
+		spk("Hello, I'm funky!")
+
+The first word  
+def  
+says that we are making a function and not telling a function to run ("calling a function" is the proper name of making a function run).  
+funky  
+is the name of our function. In this respect it is like a variable, but that's about it.  
+Lets look down to the next function you see and I'll explain what the (): are. The next function looks like:  
+
+	def say_level(player_level):
+		spk("I am level ")
+		spk(player_level)
+
+So we see the  
+def  
+saying that `say_level` is a function name and not a call of the function or a variable, then we see:  
+`(player_level)`  
+here is where we say what kind of info or variables we want someone to add when they call the function (when they ask the function to run). In python, these have a special name. We call them: parameters.  
+This is what really makes functions different than variables. We will see it in the next part:  
+
+		spk("I am level ")
+		spk(player_level)
+
+Oh my, this is part of the magic, help!!!  
+You're right,  
+spk()  
+calls a function! For now, you don't need to know anything but what that function needs and does. When we fill the parameters (In python we have yet another name for stuff we give a function when we call it, we say arguments)  
+\*cough\* when we "pass the arguments to the function"  
+It takes that stuff and does stuff with it. spk will speak our stuff.  
+But the function we made, what does it do?  
+
+First it calls the function spk with the argument "I am level".  
+This makes the screen-reader say  
+"I am level"  
+Then it calls spk again, but this time with the parameter we made above, `player_level`.  
+So really we are \*are you ready?\* calling spk with the parameter we made above as the argument.  
+In English now:  
+We give the function spk `player_level` to speak.  
+
+#something that is awesome
+When you start using functions all the time, you may see two things. The first looks like this:  
+`def say_level(player_level=1):`  
+Do you see that equals sign? That means if someone forgets or does not wish to put in their own stuff/arguments when they call the function, `player_level` will default to 1.  
+The second is when calling a function:  
+`say_level(player_level=44)`
+You can see we did that on the line:  
+
+	elif key == "1":
+		say_level(player_level=player1_level)
+
+This is really nice if we have a lot of arguments and we know some of them have default values. If we have a function that looks like:  
+`def stats(level=1, hp=10, stamina=100, mana=150, speed=43):`  
+We can do:  
+`stats(speed=34)`  
+And just leave the other arguments as their defaults.
+
+#extra credit
+1. Look at the logic function (Yes, that is what that is, it's not magic any more :(). Try to figure out what is going on. Write comments above each line, saying what you think it does. You will find out if you are right the next lesson.
+2. add a function using default arguments.
+3. make all the function calls specify default arguments if the function they are calling has them.
+4. Take a look at [A page in the api](../API/ui.html)  
+see if you can spot any default arguments. Do you see where they may be useful?
