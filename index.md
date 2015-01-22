@@ -1,7 +1,7 @@
 <title>PyAudioGame - a python toolkit for making audio games</title>
 
 #Quick Links
-[Newbie Tutorials](documentation/basic/index.md)
+[Newbie Tutorials](documentation/basic/index.html)
 [Download](website/downloads.html)
 [API](documentation/API/index.html)
 [Advanced getting started](documentation/advanced/index.html)
