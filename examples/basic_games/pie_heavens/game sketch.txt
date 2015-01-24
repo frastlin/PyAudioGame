@@ -1,0 +1,126 @@
+game sketch
+
+Pie Heavens
+
+Summery:
+You are a pie floating through space, fighting Milky Way aliens. You float around stars and asteroids. The Milky Way aliens shoot forks at the pie and the pie shoots a heat ray because he is a hot apple pie. There are 10 or so rooms and one enemy. If possible, the pie will advance a level. The goal is to float to meet the Giant Way.
+
+structure
+Each room will have attributes and will either do nothing, heal, or damage the pie. A room will also have a random chance of having an enimy.
+moving
+You press one of the arrow keys to move. It really doesn't make any difference what one, it is all random.
+You press h to hear health of the pie, g to hear the health of the enimy and x to hear xp.
+combat
+It will be random who is first, but you press space to shoot your pie ray. You also have a special attack that will charge 10% each room. This ray will do a lot of damage. You press ctrl to shoot this ray.
+You hit between 15 and 30 damage on the first level, then each level you get an extra 40% strength. Your deathray hits 40% of the enimy's hp at level 1 and +5% each level after.
+All hits have a 3/4 chance of hitting.
+death
+you start out with 3 lives and when you kill a boss you get a life.
+leveling
+You start out with 100 HP and get 10% each level.
+levels cost twice the amount
+As you level, the creatures level and they will get anywhere from 30 hp less to 30 hp above your hp.
+They are also a little weeker than you are.
+
+constants
+hp_gain = 0.10
+hp_heal = 0.40
+xp_multiplyer = 2
+missed_number = 4
+
+storage variables
+player_level = 1
+player_hp = 100
+player_xp = 0
+player_deathray_charge = 100
+player_hit = 30
+player_deathray_hit = 40
+player_next_level = 50
+player_lives = 3
+
+fo_current_hp = 100
+fo_max_hp = 130
+fo_strength = 20
+
+functions
+attack()
+	Will first put into a variable who hit and who didn't. Then if player hit, it will remove a random amount of hp from the fo. If the fo hit it will remove a random amount of hp from the player.
+combat()
+	will set hp for the mob and 
+
+screens
+
+Main Menu
+
+Welcome to pie Heavens!
+Please choose an option:
+1. Blast into space
+2. Exit
+
+
+room1:
+Floating between the stars, no end in sight. Hot from the oven, ready for someone to take a bite.
+A Hot Apple Pie gifted with space flight.
+The Milky Way bites swarm all around, but the key to control still must be found.
+For a lost pie in space is never aloud.
+Forks and knives are used to hurt and you blast heat for a chocolate milting spurt.
+ 
+Welcome to space. Choose numbers to navigate through the void. Type 'quit' to leave the adventure (Note, your progress will not be saved!)
+1. Drift along
+2. Look at stats
+
+room2
+Near a red giant
+
+A bright red glow spreads out from a massive star relatively close by. The heat helps a pie weld itself back together.
+1. Float along
+2. look closer at the red giant
+3. Look at stats
+
+Closer into the red giant
+This massive red star is nearing the end of its shining life. At this point the star is poofed up like a balloon with a small dense center of helium that is turning into carbon. The red is due to the relatively cool exterior, but one would still want to keep its distance. Soon though, the force in the center of the star will die and the entire outer layer will implode, making a very squozen ball of mass.
+1. Drift along
+
+room3:
+Between the Stars
+Between the countless dots of light, time is inconsequential. Space is all that matters. With light years between each star, drifting turns into something only another drifter can understand.
+1. Keep drifting
+
+room4
+By an Asteroid
+A giant hunk of metal and rock is orbiting around the nearest star. Dust from past collisions cover the surface. Talk about being hard headed...
+
+room5
+Overlooking a Planet
+Dull and seemingly lifeless, this massive collection of elements has formed a very dense and massive rock. What make this different from Asteroids are first the size and the fact that this hunk of junk has an atmosphere of gas.
+
+room6:
+Around a Neutron Star
+This corpse is the result of a fairly large star that became a red giant, and then became so dense that all the corks became neutrons. The mass is not enough for a black hole, but it was too much for a white dwarf.
+
+enemy1
+Small Milkey Way
+
+Directly from Mars, this small piece of chocolate and malt is having a bad nutday!
+
+enemy2
+American Milkey Way
+
+450 calories of unadulterated milkey madness with nuts!
+
+boss1:
+Giant American Milkey Way
+
+"The sweet you can eat between meals!" This milkey way is a giant version of the little guys you have seen before. It is a little more than 450 calories, you better be careful!
+
+boss2
+America, the Milkey Way
+
+" At work, rest and play, you get three great tastes in a Milky Way." Death, milk and ablivian!
+
+boss 3
+Milkey God
+
+The milkey god says: "Life's Better the Milky Way." Come and join me, don't float away.
+
+
