@@ -102,7 +102,7 @@ class App(object):
 			elif event.type == KEYDOWN:
 				actions['state'] = "down"
 				actions['key'] = pygame.key.name(event.key)
-				actions['mods'] = mod_id.get(pygame.key.get_mods(), [])
+				actions['mods'] = mod_id.get(pygame.key.get_mods(), [pygame.key.get_mods()])
 			elif event.type == KEYUP:
 				actions['state'] = "up"
 				actions['keyUp'] = pygame.key.name(event.key)
@@ -124,13 +124,31 @@ class App(object):
 		sys.exit()
 
 mod_id = {
-64: ['ctrl'],
-320: ['ctrl'],
-1: ['shift'],
-257: ['shift'],
-65: ['ctrl', 'shift'],
-256: ['alt'],
-257: ['alt', 'shift'],
-321: ['ctrl', 'alt', 'shift']
+64: ['left ctrl'],
+320: ['left ctrl'],
+1: ['left shift'],
+257: ['left shift'],
+256: ['left alt'],
+2: ['right shift'],
+128: ['right ctrl'],
+65: ['left ctrl', 'left shift'],
+66: ['left ctrl', 'right shift'],
+257: ['left alt', 'left shift'],
+129: ['right ctrl', 'left shift'],
+130: ['right ctrl', 'right shift'],
+321: ['left ctrl', 'left alt', 'left shift'],
+322: ['left ctrl', 'left alt', 'right shift'],
+258: ['left alt', 'right shift'],
+384: ['left alt', 'right ctrl'],
+386: ['left alt', 'right ctrl', 'right shift'],
 }
 
+if __name__ == '__main__':
+	f = App("Key Test")
+	def logic(actions):
+		mods = actions['mods']
+		if mods:
+			spk(str(mods))
+
+	f.logic = logic
+	f.run()

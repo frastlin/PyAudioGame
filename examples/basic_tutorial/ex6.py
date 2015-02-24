@@ -2,9 +2,9 @@
 import pyaudiogame
 from pyaudiogame import cash as storage
 spk = pyaudiogame.speak
-MyApp = pyaudiogame.App("My Application")
+MyApp = pyaudiogame.App("Pizza Please")
 
-storage.screen = ["add"]
+storage.screen = ["start"]
 storage.toppings = ["cheese", "olives", "mushrooms", "Pepperoni", "french fries"]
 storage.your_toppings = ["cheese"]
 storage.did_run = False
@@ -17,6 +17,7 @@ def is_number(number, topping_list):
 			return number
 
 def say_message(message):
+	"""Will check if the message has been read and if so, passes. Else, it will read the message"""
 	if not storage.did_run:
 		spk(message)
 		storage.did_run = True
@@ -26,7 +27,7 @@ def add_topping(key):
 	number = is_number(key, storage.toppings)
 	if number or number == 0:
 		storage.your_toppings.append(storage.toppings[number])
-		spk("You added %s to your pizza. Your pizza currently has %s toppings" % (storage.toppings[number], storage.your_toppings))
+		spk("You added %s to your pizza. Your pizza currently has %s on top" % (storage.toppings[number], storage.your_toppings))
 
 def remove_topping(key):
 	"""Removes toppings from the pizza"""
@@ -37,16 +38,10 @@ def remove_topping(key):
 			spk("You can't remove cheese, what are you, Italian?")
 			storage.your_toppings.insert(0, "cheese")
 		else:
-			spk("You removed %s from your pizza. Now your pizza has %s as the toppings" % (t, storage.your_toppings))
-
-#len
-#append
-#insert
-#pop
-#remove
-#index
+			spk("You removed %s from your pizza. Now your pizza has %s on top" % (t, storage.your_toppings))
 
 def logic(actions):
+	"""Press a and d to switch from adding and removing toppings, press 0-9 to deal with the toppings and press space to eat the pizza"""
 	key = actions['key']
 	if key == "d":
 		spk("Press a number to remove a topping from your pizza, press a to add toppings again")
@@ -60,6 +55,10 @@ def logic(actions):
 		spk("You sit down to enjoy a yummy pizza. You eat... eat... eat... eat... and are finally done. That was good! Now it's time for another!")
 		storage.your_toppings = ['cheese']
 		storage.did_run = False
+	elif storage.screen[0] == "start":
+		spk("Welcom to pizza madness! Here you can build your own pizza to eat! Press a to add toppings, press d to remove them and when you are done, press space to eat your yummy pizza!!!")
+		storage.screen.remove("start")
+		storage.screen.append("add")
 	elif storage.screen[0] == "add":
 		say_message("Please choose a number of toppings to add! Press d to start removing toppings. Toppings are %s" % storage.toppings)
 		if key:

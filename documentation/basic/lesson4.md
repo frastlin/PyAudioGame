@@ -146,7 +146,7 @@ float1 = 2.789
 A bool is what we looked at in the last lesson, it is a True or False value:  
 bool1 = False  
 You can use the operators on ints, floats and strings. Ints and floats can be combined to create a float, but strings can only be added to other strings or multiplied by ints. Bools can't be combined with anything.  
-##Escape sequences
+##string formatting
 Strings have this nice feature called "string formatting" that allows us to insert variables of other types into a string. There is a huge list of string formatting commands, but the one that is most used is:  
 `%s`  
 This converts all variables to a string. Here is an example:  
