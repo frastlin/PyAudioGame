@@ -2,15 +2,15 @@
 
 #chapters
 
-[Getting started](getting_started.html)
+[Getting started](gettingstarted.html)
 [lesson 0: Hello World](lesson0.html)
 [lesson1: you're very able](lesson1.html)
 [Lesson 2: lets get funcky!](lesson2.html)
 [lesson 3: but what if](lesson3.html)
 [lesson 4: wait, is that math?](lesson4.html)
 [lesson 5: No, I didn't say my jewels](lesson5.html)
-[lesson 6: game1](lesson6.html)
-[lesson 7: balista!](lesson7.html)
+[lesson 6: balista!](lesson6.html)
+[lesson 7: game1](lesson7.html)
 [lesson 8: dict ... hey! get your mind out of the gutter!](lesson8.html)
 [lesson 9: shhh, it's classified](lesson9.html)
 
