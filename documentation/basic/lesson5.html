@@ -1,0 +1,142 @@
+<p><title>lesson 5: No, I didn't say my jewels -- Basic Tutorial</title></p>
+
+<p><a href="index.html">Back to Index</a></p>
+
+<h1>The module</h1>
+
+<p>So just like with everything else, programmers like to shroud their craft with fancy words for things that probably don't need it. <br />
+Module is one of these words. <br />
+What is a module? A module is another file with code in it that you can use in your script. Why not call it a file? Because a file doesn't have code in it... <br />
+So we call files with code in them modules. <br />
+The module is something that python is particularly good at. You group functions and tasks into modules so you can manage and read your code better.  </p>
+
+<h1>How to use a module</h1>
+
+<p>You call the module's functions or add the module to your namespace by doing two different things: <br />
+For most things, it is best to always do the first as it will make your code cleaner in the end if you choose to use a lot of different functions from the imported module. The first is: <br />
+import moduleName <br />
+This will bring that moduleName into your current module so you can type <br />
+moduleName.function() <br />
+to run a function inside that module. <br />
+The second way is only used if you are only using one function from a module. There is no real speed difference, it just takes up a name in your module's namespace. It is: <br />
+from moduleName import function <br />
+That way you can type: <br />
+function() <br />
+just as if you created it in your current module. <br />
+The next example needs you to make 2 files. Name one <br />
+ex5.py <br />
+and the other <br />
+ex5_1.py  </p>
+
+<h1>code for ex5_1.py</h1>
+
+<pre><code>#My first module!
+from pyaudiogame import speak as spk
+
+def func():
+    spk("This is the ex5_1 module!!! Hello world!!!")
+</code></pre>
+
+<h1>code for ex5.py</h1>
+
+<pre><code>#fraught with possibility
+import pyaudiogame
+import random
+import ex5_1
+spk = pyaudiogame.speak
+MyApp = pyaudiogame.App("My Application")
+
+def logic(actions):
+    key = actions['key']
+    if key == "space":
+        ex5_1.func()
+    elif key == "return":
+        spk("Your random number is: %s!" % random.randint(1,10))
+
+MyApp.logic = logic
+MyApp.run()
+</code></pre>
+
+<h1>What you should see</h1>
+
+<p>When you press space you should hear: <br />
+"This is the ex5_1 module!!! Hello world!!!" <br />
+If you press return you should hear: <br />
+"Your random number is: %s!" <br />
+Where <code>%s</code> is a random number.</p>
+
+<h1>Built-in modules</h1>
+
+<p>Python has something called The
+<a href="https://docs.python.org/2/library/">Python Standard Library</a>
+Which is a group of modules that every python instilation comes with. These include a random module for generating random numbers, a time module for dealing with dates and time, a sys module with functions that deal with the computer, os which has functions to tell info about the current operating system, a math module with more complex math functions and somewhere around 100 modules filled with functions. <br />
+In general, if you find that there is a built-in way of doing something, it will be faster for you to use that way than to write your own code for doing the same thing. Always google to see if you can already do something in python before trying to make it yourself.  </p>
+
+<h1>What is going on in our code</h1>
+
+<h2>ex5_1.py</h2>
+
+<pre><code>#My first module!
+from pyaudiogame import speak as spk
+</code></pre>
+
+<p>Here we are using the second type of importing with a little fancy keyword: <br />
+from pyaudiogame import speak as spk <br />
+Instead of typing <br />
+speak("text to speak") <br />
+we are saying that we wish the variable spk to be assigned to speak. That way we have a free speak variable and because spk is something that is typed a lot, we can save our fingers the trouble of typing a 5 letter word. Just put that "as" keyword after the module name and then the new name.  </p>
+
+<pre><code>def func():
+    spk("This is the ex5_1 module!!! Hello world!!!")
+</code></pre>
+
+<p>This is just a simple function with no call.</p>
+
+<h2>ex5.py</h2>
+
+<pre><code>#fraught with possibility
+import pyaudiogame
+import random
+import ex5_1
+spk = pyaudiogame.speak
+MyApp = pyaudiogame.App("My Application")
+</code></pre>
+
+<p>Sorry to burst your bubble of magical mystery, but these lines are no more than imports. We are just importing pyaudiogame, random and our ex5_1 module. We are also importing the speak function and we have one line of magic that we know is a variable and something that looks like a function in a module but I will tell you that it is not, it is something we will learn about in a couple lessons.  </p>
+
+<pre><code>def logic(actions):
+    key = actions['key']
+    if key == "space":
+        ex5_1.func()
+    elif key == "return":
+        spk("Your random number is: %s!" % random.randint(1,10))
+</code></pre>
+
+<p>By typing the name of the module, <br />
+ex5<em>1.func() <br />
+We can use the function from ex5</em>1.  </p>
+
+<pre><code>MyApp.logic = logic
+MyApp.run()
+</code></pre>
+
+<p>And our last two lines that look like modules, but are really not.  </p>
+
+<h1>assignment</h1>
+
+<ol>
+<li>Add some more functions to the program from the ex5_1 module.</li>
+<li>Add another module.</li>
+<li>Check out the python standard for writing code,
+<a href="https://www.python.org/dev/peps/pep-0008/">pep8</a>
+and read what it says about imports. Change any code you find or write to follow it. This will make you a better programmer than many.</li>
+</ol>
+
+<h1>extra credit</h1>
+
+<ol>
+<li>Find what the difference between a module and a package is.</li>
+<li>Read up on random and find all the different functions that are in it. *hint* I like random.choice, random.randint, random.randrange and random.uniform. Why would I like using these and not the others? Write some code that uses these.</li>
+<li>Find another module from the Python Standard Library  and use some functions from it in your code.</li>
+<li>Play some games.</li>
+</ol>

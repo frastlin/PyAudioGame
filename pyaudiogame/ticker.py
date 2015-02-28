@@ -40,18 +40,25 @@ class Scheduler:
 			event.tick(elapsed_time*self.time_format)
 		[self.events.remove(e) for e in done_events]
 
-	def schedule(self, function, delay=0, repeats=1, before_delay=False, *args, **kwargs):
-		"""function is the name of the function that will run without the (), delay is the amount of time to wait, repeats is the amount of times the event will run (0) for infinent, and the wrest are arguments for the function"""
-		e = EventMaker(function, delay, repeats, before_delay, *args, **kwargs)
+	def schedule(self, function, delay=0, repeats=1, before_delay=False, name=None, *args, **kwargs):
+		"""function is the name of the function that will run without the (), delay is the amount of time to wait, repeats is the amount of times the event will run (0) for infinent, before_delay says that the function run before the delay, name is the title of the event, and the wrest are arguments for the function"""
+		e = EventMaker(function, delay, repeats, before_delay, name, *args, **kwargs)
 		self.events.add(e)
+
+	def unschedule(self, event_name):
+		"""Call this with the event name as a string to remove it from the queue"""
+		for i in self.events:
+			if i.name == event_name:
+				i.done = True
 
 class EventMaker:
 	"""This class is the event. It has all the functions to run the event."""
-	def __init__(self, function, delay, repeats, before_delay, *args, **kwargs):
+	def __init__(self, function, delay, repeats, before_delay, name, *args, **kwargs):
 		self.function = function
 		self.delay = delay
 		self.repeats = repeats
 		self.before_delay = before_delay
+		self.name = name
 		self.args = args
 		self.kwargs = kwargs
 

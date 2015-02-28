@@ -1,0 +1,199 @@
+<p><title>Lesson 4: wait, is that math? -- Basic Tutorial</title></p>
+
+<p><a href="index.html">Back to Index</a></p>
+
+<hr />
+
+<h1>code</h1>
+
+<pre><code>#ATTACK!!!
+import pyaudiogame
+spk = pyaudiogame.speak
+MyApp = pyaudiogame.App("My Application")
+
+#Lets create a storage box so we can put our draggon's hp in there
+storage = pyaudiogame.cash
+
+#Now lets make our draggon's hp in the storage
+storage.dragon_hp = 100
+
+#Now lets make our hero's hit strength
+hero_hit = 10
+
+#An attack function
+def attack():
+    #When the hero attacks he takes the dragon's hp
+    storage.dragon_hp = storage.dragon_hp - hero_hit
+
+#Now lets make a way for our hero to attack
+def logic(actions):
+    key = actions['key']
+    if key == "space" and storage.dragon_hp &gt; 0:
+        attack()
+        spk("You, the hero of our tail swing your sword. You hit the dragon for %s damage! Now our poor dragon has %s hp left" % (hero_hit, storage.dragon_hp))
+        if storage.dragon_hp &lt;= 0:
+            spk("You, the hero of our story killed the dragon. The whole town thanks you!")
+            spk("Press escape to go back home")
+
+MyApp.logic = logic
+MyApp.run()
+</code></pre>
+
+<h1>What you should see</h1>
+
+<p>Press space and you should hear: <br />
+"You, the hero of our tail swing your sword. You hit the dragon for 10 damage! Now our poor dragon has 90 hp left" <br />
+hit space again and you hear <br />
+"You, the hero of our tail swing your sword. You hit the dragon for 10 damage! Now our poor dragon has 80 hp left" <br />
+Hit space 8 more times and you will hear: <br />
+"You, the hero of our tail swing your sword. You hit the dragon for 10 damage! Now our poor dragon has 0 hp left"
+"You, the hero of our story killed the dragon. The whole town thanks you!" <br />
+"Press escape to go back home"</p>
+
+<h1>What just happened?</h1>
+
+<p>Lets go through the code line by line:  </p>
+
+<pre><code>#ATTACK!!!
+import pyaudiogame
+spk = pyaudiogame.speak
+MyApp = pyaudiogame.App("My Application")
+</code></pre>
+
+<p>These are just the normal magical lines we have had all throughout.  </p>
+
+<pre><code>#Lets create a storage box so we can put our draggon's hp in there
+storage = pyaudiogame.cash
+</code></pre>
+
+<p>pyaudiogame has a module for storing data. That probably makes no sense right now, but in the next few lessons you will learn all about this. Just know that after writing this line, you can store variables in storage. People may say something about "global" variables and those are used, but this way is more "pythonic" and safer as there is no way you will mistake <code>storage.dragon_hp</code> for anything except for what it is. In pyaudiogame.cash there is also some features for saving data from one session to the next you will learn about later.  </p>
+
+<pre><code>#Now lets make our draggon's hp in the storage
+storage.dragon_hp = 100
+</code></pre>
+
+<p>Here is how we store our variable that we will be accessing later in the program. You can store any variable in storage, it is just like what we do with normal variables, but we can change this variable.  </p>
+
+<pre><code>#Now lets make our hero's hit strength
+hero_hit = 10
+</code></pre>
+
+<p>This is a variable we've seen before. Here is another term: "constant" The hero_hit will not be changed throughout the life of our program, so it is called a "constant variable".  </p>
+
+<pre><code>#An attack function
+def attack():
+    #When the hero attacks he takes the dragon's hp
+    storage.dragon_hp = storage.dragon_hp - hero_hit
+</code></pre>
+
+<p>Here is what seperates a constant from a variable in storage. The variable in storage can be added to or subtracted or changed completely where as the constant must stay the same. Go ahead and try to make <code>dragon_hp</code> a constant and run the program. Do you see that error? It is saying that there is no variable named <code>dragon_hp</code> even though you wrote it right above. This is because there is a thing in python called a "namespace". This means that a file has a namespace and a function has its own namespace. The function can see the file's namespace, but only on a read-only basis. The file can't see the function's namespace at all. <br />
+This is to help you keep your program organized and easy to read. It also allows for great functionality when you start writing your game in many files (what we will go over later).  </p>
+
+<pre><code>#Now lets make a way for our hero to attack
+def logic(actions):
+    key = actions['key']
+    if key == "space" and storage.dragon_hp &gt; 0:
+        attack()
+        spk("You, the hero of our tail swing your sword. You hit the dragon for %s damage! Now our poor dragon has %s hp left" % (hero_hit, storage.dragon_hp))
+        if storage.dragon_hp &lt;= 0:
+            spk("You, the hero of our story killed the dragon. The whole town thanks you!")
+            spk("Press escape to go back home")
+</code></pre>
+
+<p>Here we are using 2 if statements. 1 will remove hp and run the attack function if the dragon's hp is above 0. The other if statement will run only if the dragon's hp is 0 or below.  </p>
+
+<pre><code>MyApp.logic = logic
+MyApp.run()
+</code></pre>
+
+<p>Our last two magic statements. But notice that MyApp.logic, MyApp.run() and pyaudiogame.cash look the same. They are all methods of storage. You can save functions into storage by just treating them like variables and using them without the (). So go ahead and change it so that all the code accesses attack from storage.attack(). Look at these last two lines if you don't know how to get attack into storage.  </p>
+
+<h2>Changing variables</h2>
+
+<p>One of the pillars of programming is the ability to change variables. You can do this with several operators:  </p>
+
+<table border=1>
+<tr>
+<td>+</td>
+<td>Adds together variables</td>
+</tr>
+<tr>
+<td>-</td>
+<td>subtracts variables from one another</td>
+</tr>
+<tr>
+<td>*</td>
+<td>multiplies variables together</td>
+</tr>
+<tr>
+<td>/</td>
+<td>divides variables by one another</td>
+</tr>
+<tr>
+<td>%</td>
+<td>Will give the remaindor of 2 variables divided together</td>
+</tr>
+<tr>
+<td>**</td>
+<td>Finds to the power of</td>
+</tr>
+</table>
+
+<p>Along with the above you can combine = with <code>+-*/</code> to get something that looks like x += y. This is short-hand for writing: <br />
+x = x + y <br />
+Short-hand: <br />
+x += y  </p>
+
+<h2>Types</h2>
+
+<p>Variables are classified into several types. There are 4 that people run into all the time: <br />
+string (str) <br />
+intiger (int) <br />
+float (float) <br />
+bool (bool) <br />
+We looked at strings the first lesson. They are characters like what you are reading now, but between quotes. <br />
+string1 = "This is a string" <br />
+Intigers are any number that is not in a quote. <br />
+num = 10 <br />
+floating-point numbers are numbers with a point: <br />
+float1 = 2.789 <br />
+A bool is what we looked at in the last lesson, it is a True or False value: <br />
+bool1 = False <br />
+You can use the operators on ints, floats and strings. Ints and floats can be combined to create a float, but strings can only be added to other strings or multiplied by ints. Bools can't be combined with anything.  </p>
+
+<h2>string formatting</h2>
+
+<p>Strings have this nice feature called "string formatting" that allows us to insert variables of other types into a string. There is a huge list of string formatting commands, but the one that is most used is: <br />
+<code>%s</code> <br />
+This converts all variables to a string. Here is an example:  </p>
+
+<pre><code>age = 10
+weight = 100.35
+name = "Fred"
+"%s is %s years old and has a weight of %s lbs" % (name, age, weight)
+
+"Hello, I am %s" % name
+
+"If you are %s pounds, I'll pull you out of that bed so we can go walking %s Greggery James!" % (weight, name)
+</code></pre>
+
+<p>If you inserted the lines with quotes into spk(), they will run just fine.  </p>
+
+<h1>assignment</h1>
+
+<ol>
+<li>Change the attack function so it is stored in storage and called out of storage.</li>
+<li>Go through the last example and above each variable, write what type it is.</li>
+<li>Add a level variable, name variable and hp variable to our hero and anounce them.</li>
+<li>Convert all the long-hand addition and subtraction we used in the above code to the short-hand. People never use the long-hand code, so get used to using x -= y.</li>
+<li>Go read up on namespaces in python.</li>
+</ol>
+
+<h1>Extra credit</h1>
+
+<ol>
+<li>Go read about string formatting. See what the difference is between .format and <code>%s</code>. Also see what all the different types are. Also find why people would use the other <code>%</code> characters and not just stick to <code>%s</code> when <code>%s</code> works all the time.</li>
+<li>Make the dragon attack and take hp away from our hero.</li>
+<li>Add a key to check the health of the hero</li>
+<li>Add some messages as the dragon reaches a sertan amount of hp, explaining what the dragon is doing.</li>
+</ol>

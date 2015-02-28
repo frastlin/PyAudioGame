@@ -1,3 +1,4 @@
 from app import App
-#import mixer, cash
+from app import event_queue
 from speech import speak
+import cash

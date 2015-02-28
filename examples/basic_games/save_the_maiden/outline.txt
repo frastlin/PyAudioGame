@@ -1,5 +1,8 @@
 Save the maiden is a text adventure game.
 
+summery:
+You go into a village, learn there is a dragon who needs to be killed, kill the dragon and get your reward.
+
 story:
 A village is under attack by an evil dragon. Up to this point the dragon had just been taking livestock and wild animals, but last night, it snatched a young maiden while she was on her morning walk.
 

@@ -1,0 +1,195 @@
+game sketch
+
+Pie Heavens
+
+Summery:
+You are a pie floating through space, fighting Milky Way aliens. You float around stars and asteroids. The Milky Way aliens shoot forks at the pie and the pie shoots a heat ray because he is a hot apple pie. There are 10 or so rooms and one enemy. If possible, the pie will advance a level. The goal is to float to meet the Giant Way and kill it to get the crown for the ruler of the universe.
+
+structure
+Each room will have attributes and will either do nothing, heal, or damage the pie. A room will also have a random chance of having an enimy.
+moving
+You press one of the arrow keys to move. It really doesn't make any difference what one, it is all random.
+You press h to hear health of the pie, g to hear the health of the enimy and x to hear xp.
+combat
+It will be random who is first, but you press space to shoot your pie ray. You also have a special attack that will charge 10% each room. This ray will do a lot of damage. You press ctrl to shoot this ray.
+You hit between 15 and 30 damage on the first level, then each level you get an extra 40% strength. Your deathray hits 40% of the enimy's hp at level 1 and +5% each level after.
+All hits have a 3/4 chance of hitting.
+death
+you start out with 3 lives and when you kill a boss you get a life.
+leveling
+Each hit you will get 1 XP
+You start out with 100 HP and get 10% each level.
+levels cost twice the amount
+As you level, the creatures level and they will get anywhere from 30 hp less to 30 hp above your hp.
+They are also a little weeker than you are.
+navigation
+There will be screens:
+movement
+start
+combat
+death
+
+Always on all the screens there is the key r for repeat text.
+On all screens but start there is the keys
+h, tells health,
+x, tells xp and xp tnl,
+l for lives and
+c for the charge of the death-ray.
+
+movement
+When ever a player hits the "floating along" or move-to-next location button, a random function is called with random.choice and sets the message, sets the read_message to true, adds or removes hp and chooses if a combat or move button will be shown.
+start
+Start just has the start game and goal. It could be the place for adding a save option later.
+combat
+In combat, There will be 3 new keys:
+ctrl, death ray
+space, heat blast and
+g, health of the enimy
+When the combat screen opens, a check will run to see who will hit first, the player or the fo. If the fo, the fo hits and the screen waits, otherwise it says: "You sneek up on the evil chocolate and are able to hit the first blow"
+Right after the player attacks then, the chocolate attacks. The message will be set to the last attack message. It will say something like:
+"You open a small hole in your crust and let out a blast of heat. The chocolate fo is baithed in heat and loses 10 HP. The chocolate spits out some ascidic cream and it lands on your shell. You lose 13 HP."
+There will be a list of attack messages and a list of fo attack messages. Each attack, one of these messages will be chosen for each.
+First a fo is created from the fo variables. Both the custom death message and extra xp and extra life are set if needed, Then a check for who will attack happens, then if the fo, it attacks. then for each turn there is: the player will attack, then a death check and level check will go, then the fo will attack, then another death check will happen. Then the read_message will be set to True.
+death
+Death is different than the other screens as it is really a sub-set of combat. There is all the key commands but space and ctrl. There is one more, return will either go back to start or the traveling screen.
+An argument will be passed to death, either player or fo. If it is player, a message from the player's death messages will show, 1 life will be subtracted from the player's lives and if the lives is less than 0, another message will show that you lost the game. If you do have lives, then it will say that you can return to floating.
+If the fo dies, a message will be shown from the fo's death list or from the second argument of death which is set when combat starts (for bosses). The extra xp and lives are added and a level check is done. The read_message will be set to True.
+level check
+Will check if player_xp >= next_level and if so, will append on to the end of the message text that you advanced a level.
+
+Bosses
+There are 5 bosses and every 2 levels you reach a boss. on the 10th level you reach the giant way.
+
+engine
+The logic function will have:
+list of screen checks
+key checks with extra logic statements checking for each screen, like space only on combat, and g for death and combat
+a check if read_message is true and if so, reads text
+
+constants
+hp_gain = 0.10
+hp_heal = 0.40
+xp_multiplyer_tnl = 2
+missed_number = 4
+xp_per_hit = 1
+
+room_list = [healroom, damageroom, room1, room2, room3, room4, room5, room6]
+player_attacks = ["You open up a small hole in your crust and let a blast of piping hot heat go shooting toward the evil chocolate. You hit it for %s damage.", "You find a piece of filling that is Scalding and you direct it's heat at your chocolate foe. It is melted for %s damage.", "As you feel your filling bubble, you direct a particularly hot bubble to burst right on the evil chocolate's surface, melting a spot causing %s damage."]
+fo_attacks = ["The lump of lascivious candy sends a nut hurling toward you. It smacks onto your shell, causing a crack for %s damage.", "The evil chocolate lobs a lump of acidic cream onto your crust, burning you for %s damage.", "The evil chocolate charges your soft underside and smacks into you causing %s damage."]
+player_misses = ["You catapult a dob of filling at the dreadful chocolate, but aimed too high.", "You search for some heat inside your filling, but can't find any before the evil chocolate attacks you again.", "You fling a piece of apple at the evil chocolate, but it just brushes past it's revolting shell."]
+fo_misses = ["The evil chocolate charges at your underside, but you manage to flip onto your side before it hits you.", "The horrible chocolate picks out a large nut and flings it strait past you.", "You laugh as the disgusting chocolate digs for nuts inside its revolting filling before giving up."]
+deathray_hits = ["You gently coax the massive hot bubble from your center out to where you blast it in all its fury on the deserving chocolate. It melts for %s damage", "You silently send a huge pocket of hot air at the dastardly coco brains, giving a new meaning to the phrase, \"silent but deadly\" and you manage to remove %s damage from the lackluster lunch food", "You work up the courage and like the great pies of old, send a bubble of heat hurling toward your choco foe, delivering %s damage.", "You feel yourself becoming pie a la mode, but then realise that it is that all your heat has gon into a super hot bubble that you blast at the cracked up coco butter ball. It melts the lump of lackluster chocolate for %s damage"]
+deathray_misses = [""You gently coax a huge bubble of hot air out of your center, but right before it reaches your launching spot, it pops and you are left with nothing but some hot filling.", "Trying to get the bubble of hot air as large as possible, you add one too many spurts of hot air and it pops.", "You gently coax your large bubble of hot air to the launching pad and send it hurling at the chocolate, but it decides to drift and join the stars."]
+
+storage variables
+room_number = 0
+screen = "start"
+message = ""
+read_message = True
+current_fo = None
+
+player_level = 1
+player_hp = 100
+player_xp = 0
+player_deathray_charge = 100
+player_hit = 30
+player_deathray_hit = 40
+player_next_level = 50
+player_lives = 3
+
+fo_current_hp = 100
+fo_max_hp = 130
+fo_strength = 20
+fo_death_message = None
+
+extra_lives = 0
+extra_xp = 0
+
+screens
+start:
+Welcome to pie Heavens!
+Press return to blast off into space and escape to exit!
+
+start2:
+Floating between the stars, no end in sight. Hot from the oven, ready for someone to take a bite.
+A Hot Apple Pie gifted with space flight.
+The Milky Way bites swarm all around, but the crown to control still must be found.
+For a lost pie in space is never aloud.
+Forks and knives are used to hurt and you blast heat for a chocolate milting spurt.
+Press the arrow keys to go randomly drift. If you happen to hit a chocolate foe melt it with space or controll.
+
+
+healroom:
+Near a red giant
+
+A bright red glow spreads out from a massive star relatively close by. The heat helps a pie weld itself back together.
+
+damageroom:
+Escaping a black hole
+Yikes! That is a black hole! Sometimes drifting is not all it's cracked up to be... But now you are... All cracked up... Ouch!
+
+room1:
+Closer into the red giant
+This massive red star is nearing the end of its shining life. At this point the star is poofed up like a balloon with a small dense center of helium that is turning into carbon. The red is due to the relatively cool exterior, but one would still want to keep its distance. Soon though, the force in the center of the star will die and the entire outer layer will implode, making a very squozen ball of mass.
+
+room2:
+With the big cheeses
+Chilling chunks of cheese are floating around you. Earth is not the only moon with its satellite made out of cheese and most planets with moons have more than one. This planet has 37 and they are all made out of cheese. Wonder what they call the largest moon? Probably the big cheese.
+
+room3:
+Between the Stars
+Between the countless dots of light, time is inconsequential. Space is all that matters. With light years between each star, drifting turns into something only another drifter can understand.
+
+room4
+By an Asteroid
+A giant hunk of metal and rock is orbiting around the nearest star. Dust from past collisions cover the surface. Talk about being hard headed...
+
+room5
+Overlooking a Planet
+Dull and seemingly lifeless, this massive collection of elements has formed a very dense and massive rock. What make this different from Asteroids are first the size and the fact that this hunk of junk has an atmosphere of gas.
+
+room6:
+Around a Neutron Star
+This corpse is the result of a fairly large star that became a red giant, and then became so dense that all the corks became neutrons. The mass is not enough for a black hole, but it was too much for a white dwarf.
+
+enemy1
+Small Milkey Way
+
+Directly from Mars, this small piece of chocolate and malt is having a bad nutday!
+
+enemy2
+American Milkey Way
+
+450 calories of unadulterated milkey madness with nuts!
+
+UK milkey Way
+Creamy, smoothe and 99 calories inside a thick chocolate shell. Put this guy in milk to see how he floats.
+
+Forever Yours
+The evil twin of an already evil chocolate bar! This time you've got twin vanilla to destroy.
+
+Milky Way Midnight
+Black, small, but more evil than the other bars, this little guy will not give up until someone is dead. Someone better attack before they lose their head.
+
+boss1:
+Giant American Milkey Way
+
+"The sweet you can eat between meals!" This milkey way is a giant version of the little guys you have seen before. It is a little more than 450 calories, you better be careful!
+
+boss2
+America, the Milkey Way
+
+" At work, rest and play, you get three great tastes in a Milky Way." Death, milk and ablivian!
+
+boss 3
+Milkey God
+
+The milkey god says: "Life's Better the Milky Way." Come and join me, don't float away.
+
+boss4
+Milkey Way Magic stars
+Pop Star, Jess Star, Bright Star, Super Star, Happy Star, Sport Star and Baby Star are all looking at you... Sorry, we were just Eating our last victim... Hahahahahahahaha!!! You're next!
+
+The Giant Way
+Shiver and crack my flaky foe! You seem a little tarty today, perhaps you would like some ice cream to come your way?
+
