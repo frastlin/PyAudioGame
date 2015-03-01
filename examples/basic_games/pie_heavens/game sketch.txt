@@ -83,9 +83,6 @@ deathray_misses = [""You gently coax a huge bubble of hot air out of your center
 
 storage variables
 room_number = 0
-screen = "start"
-message = ""
-read_message = True
 current_fo = None
 
 player_level = 1
