@@ -4,7 +4,7 @@ spk = pyaudiogame.speak
 MyApp = pyaudiogame.App("My Application")
 
 #Lets create a storage box so we can put our draggon's hp in there
-storage = pyaudiogame.cash
+from pyaudiogame import storage
 
 #Now lets make our draggon's hp in the storage
 storage.dragon_hp = 100

@@ -1,6 +1,6 @@
 #Here are all the different scenes for the different rooms
 import random
-from pyaudiogame import cash as storage
+from pyaudiogame import storage
 from pyaudiogame import speak as spk
 
 def add_text(text):

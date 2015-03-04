@@ -12,7 +12,7 @@ __________
 	MyApp = pyaudiogame.App("My Application")
 	
 	#Lets create a storage box so we can put our draggon's hp in there
-	storage = pyaudiogame.cash
+	from pyaudiogame import storage
 	
 	#Now lets make our draggon's hp in the storage
 	storage.dragon_hp = 100
@@ -61,7 +61,7 @@ These are just the normal magical lines we have had all throughout.
 	#Lets create a storage box so we can put our draggon's hp in there
 	storage = pyaudiogame.cash
 
-pyaudiogame has a module for storing data. That probably makes no sense right now, but in the next few lessons you will learn all about this. Just know that after writing this line, you can store variables in storage. People may say something about "global" variables and those are used, but this way is more "pythonic" and safer as there is no way you will mistake `storage.dragon_hp` for anything except for what it is. In pyaudiogame.cash there is also some features for saving data from one session to the next you will learn about later.  
+pyaudiogame has a module for storing data. That probably makes no sense right now, but in the next few lessons you will learn all about this. Just know that after writing this line, you can store variables in storage. People may say something about "global" variables and those are used, but this way is more "pythonic" and safer as there is no way you will mistake `storage.dragon_hp` for anything except for what it is. In pyaudiogame.storage there is also some features for saving data from one session to the next you will learn about later.  
 
 	#Now lets make our draggon's hp in the storage
 	storage.dragon_hp = 100
@@ -96,7 +96,7 @@ Here we are using 2 if statements. 1 will remove hp and run the attack function 
 	MyApp.logic = logic
 	MyApp.run()
 
-Our last two magic statements. But notice that MyApp.logic, MyApp.run() and pyaudiogame.cash look the same. They are all methods of storage. You can save functions into storage by just treating them like variables and using them without the (). So go ahead and change it so that all the code accesses attack from storage.attack(). Look at these last two lines if you don't know how to get attack into storage.  
+Our last two magic statements. But notice that MyApp.logic, MyApp.run() and pyaudiogame.storage look the same. They are all methods of storage. You can save functions into storage by just treating them like variables and using them without the (). So go ahead and change it so that all the code accesses attack from storage.attack(). Look at these last two lines if you don't know how to get attack into storage.  
 ##Changing variables
 One of the pillars of programming is the ability to change variables. You can do this with several operators:  
 

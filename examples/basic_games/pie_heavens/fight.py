@@ -1,6 +1,6 @@
 #The fighting functions
 import random
-from pyaudiogame import cash as storage
+from pyaudiogame import storage
 from pyaudiogame import speak
 import messages, foes
 

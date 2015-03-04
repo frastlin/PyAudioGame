@@ -67,7 +67,7 @@ This code has a lot of strange things in it and it is really long, so type every
 #code
 	#Pizza please
 	import pyaudiogame
-	from pyaudiogame import cash as storage
+	from pyaudiogame import storage
 	spk = pyaudiogame.speak
 	MyApp = pyaudiogame.App("Pizza Please")
 	
@@ -155,11 +155,11 @@ Lets go through this code one step at a time:
 
 	#Pizza please
 	import pyaudiogame
-	from pyaudiogame import cash as storage
+	from pyaudiogame import storage
 	spk = pyaudiogame.speak
 	MyApp = pyaudiogame.App("Pizza Please")
 
-We have our imports like always. We import pyaudiogame, we import pyaudiogame.cash with the title of storage, then we assign spk to the function pyaudiogame.speak. Finally we assign MyApp to pyaudiogame.App with the title "pizza please".  
+We have our imports like always. We import pyaudiogame, we import pyaudiogame.storage, then we assign spk to the function pyaudiogame.speak. Finally we assign MyApp to pyaudiogame.App with the title "pizza please".  
 
 	storage.screen = ["start"]
 	storage.toppings = ["cheese", "olives", "mushrooms", "Pepperoni", "french fries"]
@@ -170,6 +170,8 @@ Here we create our variables. We have one constant, storage.toppings, but in ord
 storage.screen is a string inside a list that helps us keep track of where we are in the app. This is how one can figure out what what scene should be running and by making this accessible by all the modules in an app, any function can then change the screen of the program.  
 `storage.your_toppings` is the list that we change most, it is the player's list of toppings.  
 `storage.did_run` is the most checked variable, it is checked every time the game loop runs. It says if the message that is the instructions for each screen has run or not.  
+Wait, what is storage?  
+Storage is a built-in module where you can place variables, lists and what ever you would like to access throughout the life of the game in any module. It is built to be your global variable place.  
 
 	def is_number(number, topping_list):
 		"""Will check that what the user enters is really a number and not a letter, also that it is within our list"""
@@ -266,3 +268,4 @@ If t is not equal to cheese, we will keep it removed and send a message that the
 2. make it so you can't add more than one of each topping, but double cheese.
 3. This looks almost like a game. Make it into a game somehow.
 4. Use every list operation in some way, either in this program, or in another.
+5. read the [API documentation](../API/storage.html) on storage. Try out save and load.

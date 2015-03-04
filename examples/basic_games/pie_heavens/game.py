@@ -3,7 +3,7 @@ import random
 #Our imports from pyaudiogame
 import pyaudiogame
 game = pyaudiogame.App("Pie Heavens")
-storage = pyaudiogame.cash
+storage = pyaudiogame.storage
 spk = pyaudiogame.speak
 #imports from the modules created for this game
 import scenes, fight
