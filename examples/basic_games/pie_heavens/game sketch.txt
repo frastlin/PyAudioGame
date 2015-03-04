@@ -13,7 +13,7 @@ You press h to hear health of the pie, g to hear the health of the enimy and x t
 combat
 It will be random who is first, but you press space to shoot your pie ray. You also have a special attack that will charge 10% each room. This ray will do a lot of damage. You press ctrl to shoot this ray.
 You hit between 15 and 30 damage on the first level, then each level you get an extra 40% strength. Your deathray hits 40% of the enimy's hp at level 1 and +5% each level after.
-All hits have a 3/4 chance of hitting.
+All hits have a 70% chance of hitting.
 death
 you start out with 3 lives and when you kill a boss you get a life.
 leveling
@@ -83,9 +83,6 @@ deathray_misses = [""You gently coax a huge bubble of hot air out of your center
 
 storage variables
 room_number = 0
-screen = "start"
-message = ""
-read_message = True
 current_fo = None
 
 player_level = 1
@@ -193,3 +190,6 @@ Pop Star, Jess Star, Bright Star, Super Star, Happy Star, Sport Star and Baby St
 The Giant Way
 Shiver and crack my flaky foe! You seem a little tarty today, perhaps you would like some ice cream to come your way?
 
+stuff to do:
+make bosses
+send for beta testing
