@@ -17,12 +17,12 @@ def save(file="save.sav", level=1):
 	return cash_dict
 
 def load(file="save.sav", level=1):
-	"""This will return the dict of all the variables in the cash module. If there is no file, it will return False. If level == 0, it will just return a dict of all the items that are in the save file. If level == 1, it will overwrite any variables in cash that have the same variable as the saved variables. If level == 2, the cash variables will not be overwritten, but new variables will be added from the save."""
+	"""This will return the dict of all the variables in the cash module. If there is no file, it will return an empty dict. If level == 0, it will just return a dict of all the items that are in the save file. If level == 1, it will overwrite any variables in cash that have the same variable as the saved variables. If level == 2, the cash variables will not be overwritten, but new variables will be added from the save."""
 	try:
 		with open(file, "rb") as f:
 			loaded_file = _pickle.load(f)
 	except:
-		return False
+		return {}
 	if level == 1:
 		[globals().update({i: loaded_file[i]}) for i in loaded_file]
 	elif level == 2:
