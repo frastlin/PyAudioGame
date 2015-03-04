@@ -12,7 +12,9 @@
 [lesson 6: balista!](lesson6.html)
 [lesson 7: game1](lesson7.html)
 [lesson 8: dict ... hey! get your mind out of the gutter!](lesson8.html)
-[lesson 9: shhh, it's classified](lesson9.html)
+[lesson 9: Going loopy!](lesson9.html)
+[lesson 10: shhh, it's classified](lesson10.html)
+[lesson 11: Stealing the cookies from the cookie jar...](lesson11.html)
 
 #About
 This is for people who have never programmed before, have never used python and who would like to start creating games ASAP. Because a gaming engine is quite advanced by nature, there will be quite a few lessons where the code you will be asked to write will be above your level. We will just say it's magic for now, but as you go along, you will realise that what we talked about in that lesson is in the template.  

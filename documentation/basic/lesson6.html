@@ -71,7 +71,7 @@ So when working with lists, just know that you need to subtract 1 always.  </p>
 
 <pre><code>#Pizza please
 import pyaudiogame
-from pyaudiogame import cash as storage
+from pyaudiogame import storage
 spk = pyaudiogame.speak
 MyApp = pyaudiogame.App("Pizza Please")
 
@@ -162,12 +162,12 @@ And your toppings will be reset.  </p>
 
 <pre><code>#Pizza please
 import pyaudiogame
-from pyaudiogame import cash as storage
+from pyaudiogame import storage
 spk = pyaudiogame.speak
 MyApp = pyaudiogame.App("Pizza Please")
 </code></pre>
 
-<p>We have our imports like always. We import pyaudiogame, we import pyaudiogame.cash with the title of storage, then we assign spk to the function pyaudiogame.speak. Finally we assign MyApp to pyaudiogame.App with the title "pizza please".  </p>
+<p>We have our imports like always. We import pyaudiogame, we import pyaudiogame.storage, then we assign spk to the function pyaudiogame.speak. Finally we assign MyApp to pyaudiogame.App with the title "pizza please".  </p>
 
 <pre><code>storage.screen = ["start"]
 storage.toppings = ["cheese", "olives", "mushrooms", "Pepperoni", "french fries"]
@@ -178,7 +178,9 @@ storage.did_run = False
 <p>Here we create our variables. We have one constant, storage.toppings, but in order to make everything match, we put it in storage. <br />
 storage.screen is a string inside a list that helps us keep track of where we are in the app. This is how one can figure out what what scene should be running and by making this accessible by all the modules in an app, any function can then change the screen of the program. <br />
 <code>storage.your_toppings</code> is the list that we change most, it is the player's list of toppings. <br />
-<code>storage.did_run</code> is the most checked variable, it is checked every time the game loop runs. It says if the message that is the instructions for each screen has run or not.  </p>
+<code>storage.did_run</code> is the most checked variable, it is checked every time the game loop runs. It says if the message that is the instructions for each screen has run or not. <br />
+Wait, what is storage? <br />
+Storage is a built-in module where you can place variables, lists and what ever you would like to access throughout the life of the game in any module. It is built to be your global variable place.  </p>
 
 <pre><code>def is_number(number, topping_list):
     """Will check that what the user enters is really a number and not a letter, also that it is within our list"""
@@ -296,4 +298,5 @@ name, age = ["Joe", 42]  </p>
 <li>make it so you can't add more than one of each topping, but double cheese.</li>
 <li>This looks almost like a game. Make it into a game somehow.</li>
 <li>Use every list operation in some way, either in this program, or in another.</li>
+<li>read the <a href="../API/storage.html">API documentation</a> on storage. Try out save and load.</li>
 </ol>

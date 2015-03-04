@@ -1,6 +1,6 @@
 #Pizza please
 import pyaudiogame
-from pyaudiogame import cash as storage
+from pyaudiogame import storage
 spk = pyaudiogame.speak
 MyApp = pyaudiogame.App("Pizza Please")
 
