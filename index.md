@@ -7,6 +7,7 @@
 [Advanced getting started](documentation/advanced/index.html)
 [Games](website/games.html)
 [Git page](https://github.com/frastlin/PyAudioGame)
+[Email List](website/email_list.html)
 
 __________
 
@@ -17,3 +18,20 @@ It is open source and under the MIT licence, so you can distribute your code how
 To download pyaudiogame, head over to
 [the download page](website/downloads.html)
 and follow the instructions.
+
+<h1>The pyaudiogame email list</h1>
+<form action="http://www.freelists.org/cgi-bin/subscription.cgi" method="post"> 
+Enter your email address: <input type="text" name="email"> 
+<input type=hidden name="list" value="pyaudiogame"> 
+<input type=hidden name="url_or_message" value="http://frastlin.github.io/PyAudioGame/website/subscribed.html">
+<select name="action"> 
+<option value="subscribe">Subscribe</option> 
+<option value="unsubscribe">Unsubscribe</option> 
+<option value="set digest">Turn Digest mode on</option> 
+<option value="unset digest">Turn Digest mode off</option> 
+<option value="set vacation">Turn Vacation mode on</option> 
+<option value="unset vacation">Turn Vacation mode off</option> 
+<option value="help">Get Help</option> 
+</select> 
+<input type=submit value="Go!"> 
+</form>  
