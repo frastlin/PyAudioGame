@@ -19,6 +19,7 @@ def speak(text, sp=True):
 class Text(object):
 	"""Deals with processing of text"""
 	def __init__(self, text):
+		text = str(text)
 		self.text = text
 		self.word_position = 0
 		self.letter_position = 0

@@ -1,7 +1,8 @@
 #This is a module of functions that will add or check if something is added to a list. Mostly to check if a ui instance is already loaded.
-from pyaudiogame import cash
+from pyaudiogame import storage
 from pyaudiogame import ui
-temp_dict = cash.temp_dict
+storage.temp_dict = {}
+temp_dict = storage.temp_dict
 
 def add_menu(actions, options=['Yes', 'No'], dict=temp_dict, name=None, result_list=[], default_position=0, keys={"navigation_back": "up", "navigation_forward": "down", "exit": ["escape", "backspace"], "except": "return"}, shortkeys=None, title="Test Menu", loops=True, persistent=0, sounds={}):
 	"""Call this function with a dict of actions and the name of a dict to append either the name or title to."""
