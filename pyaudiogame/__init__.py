@@ -4,6 +4,8 @@
 
 import storage
 import key
+import mixer
+import ui.__init__
 from app import App
 from app import event_queue
 from speech import speak
