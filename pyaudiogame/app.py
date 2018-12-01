@@ -1,9 +1,11 @@
 #Has functions to do everything your engine module needs
 import pygame, random, sys
 from pygame.locals import *
-from speech import speak as spk
+
+from pyaudiogame.speech import speak as spk
+
 #our program spacific modules:
-import ticker
+import pyaudiogame.ticker as ticker
 
 #This is a global event queue
 event_queue = ticker.Scheduler(time_format=0.001)
@@ -75,6 +77,7 @@ class App(object):
 				displaySurface = pygame.display.set_mode((windowwidth, windowheight), pygame.FULLSCREEN)
 		else:
 				displaySurface = pygame.display.set_mode((windowwidth, windowheight))
+		#pygame.display.iconify() #makes the console go in front and the pygame window hide behind
 		pygame.display.set_caption(title)
 		if not mouse:
 			pygame.mouse.set_visible(0)
@@ -146,6 +149,9 @@ mod_id = {
 if __name__ == '__main__':
 	f = App("Key Test")
 	def logic(actions):
+		if(actions['key']):
+#			spk(actions['key'])
+			print(actions['key'])
 		mods = actions['mods']
 		if mods:
 			spk(str(mods))
