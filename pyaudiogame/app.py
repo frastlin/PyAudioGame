@@ -13,10 +13,11 @@ event_queue = ticker.Scheduler(time_format=0.001)
 class App(object):
 	"""This is to subclass for an application."""
 
-	def __init__(self, title="Test app", fps=30):
+	def __init__(self, title="Test app", fps=30, window_type="pygame"):
 		"""Title is the name of the window, fps is frames per second, how many iterations the loop runs in a given second. The default is 30"""
 		self.title = title
 		self.fps = fps
+		self.window_type = "window_type # pygame, console. are the options
 
 		#Default variables that can be changed, but are not called
 		#For the screen:
@@ -77,8 +78,10 @@ class App(object):
 				displaySurface = pygame.display.set_mode((windowwidth, windowheight), pygame.FULLSCREEN)
 		else:
 				displaySurface = pygame.display.set_mode((windowwidth, windowheight))
-		#pygame.display.iconify() #makes the console go in front and the pygame window hide behind
 		pygame.display.set_caption(title)
+		if self.window_type == "console":
+			pygame.display.iconify() #makes the console go in front and the pygame window hide behind
+			pygame.display.set_caption("Don't focus this window, Go back to the console!")
 		if not mouse:
 			pygame.mouse.set_visible(0)
 			return displaySurface

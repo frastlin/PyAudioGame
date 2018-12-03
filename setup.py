@@ -10,9 +10,9 @@ config = {
 	'download_url': 'https://codeload.github.com/frastlin/PyAudioGame/zip/master',
 	'author_email': 'brandonkeithbiggs@gmail.com',
 	'version': '0.01a',
-	'install_requires': ['pygame'],
-#	'dependency_links': ['https://github.com/frastlin/accessible_output2/tarball/master#egg=accessible_output2-0.12.dev0'],
-	'dependency_links': ['git+https://github.com/frastlin/accessible_output2.git@master'],
+	'install_requires': ['pygame', 'inputs', 'accessible_output2'],
+	'dependency_links': ['https://github.com/frastlin/accessible_output2/tarball/master#egg=accessible_output2-0.12'],
+#	'dependency_links': ['git+https://github.com/frastlin/accessible_output2.git@master'],
 
 	#accessible_output2 is broken and accessible_output is in packages.
 	#can't get the links to an hg repo to work for some reason...
