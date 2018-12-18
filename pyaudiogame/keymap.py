@@ -29,3 +29,6 @@ class KeyMap(object):
 			missing_items = ', '.join(missing_items)
 			raise Exception("KeymapError: KeyMap.add was passed a mapping without a value for: %s" % missing_items)
 
+	def getEvent(self, keys, mods):
+		"""Gets the event that is triggered by the list of keys and mods"""
+		return True

@@ -17,7 +17,7 @@ class App(object):
 		"""Title is the name of the window, fps is frames per second, how many iterations the loop runs in a given second. The default is 30"""
 		self.title = title
 		self.fps = fps
-		self.window_type = "window_type # pygame, console. are the options
+		self.window_type = window_type # pygame, console. are the options
 
 		#Default variables that can be changed, but are not called
 		#For the screen:

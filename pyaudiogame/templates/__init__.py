@@ -1,1 +1,1 @@
-from player import Player
+from pyaudiogame.templates.player import Player
