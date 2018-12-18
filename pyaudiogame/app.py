@@ -3,6 +3,7 @@ import pygame, random, sys
 from pygame.locals import *
 
 from pyaudiogame.speech import speak as spk
+from pyaudiogame.keymap import KeyMap
 
 #our program spacific modules:
 import pyaudiogame.ticker as ticker
@@ -32,6 +33,8 @@ class App(object):
 		self.event_queue = event_queue
 		#A hard-coded exit key, 1 is escape, 2 is alt + f4 and 0 is nothing **WARNING** if there is no exit key you need to go to command prompt window and hit ctrl + c to exit the window!
 		self.exit_key = 1
+		# the key mapping object
+		self.keymap = KeyMap()
 
 		#Our exicution variables
 		self.running = True
