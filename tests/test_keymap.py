@@ -7,47 +7,56 @@ def funcCallback():
 class TestKeymap(unittest.TestCase):
 	def test_add_function(self):
 		keymap = KeyMap()
-		keymap.add(keys=["f"], mods=["shift"], event="fligh")
+		keymap.add(key=["f"], mods=["shift"], event="fligh")
 		keymap.add({
-			"keys": "j",
+			"key": "j",
 			"event": "jump"
 		})
-		self.assertEqual(keymap.getEvent(keys=["f"], mods=["shift"]), "fligh")
-		self.assertEqual(keymap.getEvent(keys="j"), "jump")
+		self.assertEqual(keymap.getEvent(key=["f"], mods=["shift"]), "fligh")
+		self.assertEqual(keymap.getEvent(key="j"), "jump")
 		self.assertEqual(keymap.getEvent("space"), None)
 
 	def test_add_in_object(self):
 		keymap = KeyMap([
-			{'keys':['space'], 'event': "oranges"},
-			{'keys':['f', 'a'], 'mods': ['ctrl','shift'], 'function': funcCallback},
+			{'key':['space'], 'event': "oranges"},
+			{'key':['f', 'a'], 'mods': ['ctrl','shift'], 'function': funcCallback},
 		])
-		self.assertEqual(keymap.getEvent(keys=['f', 'a'], mods=['ctrl','shift']), funcCallback())
-		self.assertEqual(keymap.getEvent(keys='space'), 'oranges')
+		self.assertEqual(keymap.getEvent(key=['f', 'a'], mods=['ctrl','shift']), funcCallback())
+		self.assertEqual(keymap.getEvent(key='space'), 'oranges')
 
 	def test_add_a_list(self):
 		keymap = KeyMap()
 		keymap.add([
-			{'keys':'space', 'event': "oranges"},
-			{'keys':['f', 'a'], 'mods': ['ctrl','shift'], 'function': funcCallback},
+			{'key':'space', 'event': "oranges"},
+			{'key':['f', 'a'], 'mods': ['ctrl','shift'], 'function': funcCallback},
 		])
-		self.assertEqual(keymap.getEvent(keys=['f', 'a'], mods=['ctrl','shift']), funcCallback())
-		self.assertEqual(keymap.getEvent(keys='space'), 'oranges')
+		self.assertEqual(keymap.getEvent(key=['f', 'a'], mods=['ctrl','shift']), funcCallback())
+		self.assertEqual(keymap.getEvent(key='space'), 'oranges')
 
 	def test_state(self):
 		keymap = KeyMap([
-			{'keys':'space', 'mods':['shift'], 'state':0, 'event':'shiftSpace'},
-			{'keys':'a', 'state':1, 'event':'apple'},
+			{'key':'space', 'mods':['shift'], 'state':0, 'event':'shiftSpace'},
+			{'key':'a', 'state':1, 'event':'apple'},
 		])
-		self.assertEqual(keymap.getEvent(keys='space', mods='shift', state=0), 'shiftSpace')
+		self.assertEqual(keymap.getEvent(key='space', mods='shift', state=0), 'shiftSpace')
 		self.assertEqual(keymap.getEvent('a', state=0), None)
 
 	def test_nutral_mods(self):
 		keymap = KeyMap([
-			{'keys': 'f', 'mods': ['alt', 'ctrl', 'shift'], 'event':'modded'},
+			{'key': 'f', 'mods': ['alt', 'ctrl', 'shift'], 'event':'modded'},
 		])
-		self.assertEqual(keymap.getEvent(keys="f", mods=['alt', 'ctrl', 'shift']), 'modded')
-		self.assertEqual(keymap.getEvent(keys="f", mods=['leftalt', 'rightctrl', 'shift']), 'modded')
-		self.assertEqual(keymap.getEvent(keys="f", mods=['leftmeta', 'rightctrl', 'leftshift']), 'modded')
+		self.assertEqual(keymap.getEvent(key="f", mods=['alt', 'ctrl', 'shift']), 'modded')
+		self.assertEqual(keymap.getEvent(key="f", mods=['leftalt', 'rightctrl', 'shift']), 'modded')
+		self.assertEqual(keymap.getEvent(key="f", mods=['leftmeta', 'rightctrl', 'leftshift']), 'modded')
+
+	def test_quit_event(self):
+		keymap = KeyMap([
+			{'key': 'escape', 'event': 'quit'},
+			{'key': 'f4', 'mods':['alt'], 'event': 'quit2'}
+		])
+		self.assertEqual(keymap.getEvent(key='escape'), 'quit')
+		self.assertEqual(keymap.getEvent(key='F4', mods=['left alt']), 'quit2')
+
 
 
 if __name__ == '__main__':
