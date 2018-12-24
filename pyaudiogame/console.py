@@ -1,4 +1,5 @@
 """Simple example showing how to get keyboard events.
+Note that the mouse events don't work very well. Something is wrong with the pipe process that keeps the mouse event process from exiting in the inputs script. The bug has been reported, and as soon as it is fixed, uncommenting the run_mouse() function will work.
 print(event.ev_type, event.code, event.state)
 """
 import sys
@@ -55,7 +56,6 @@ class Console(EventHandler):
 	def __init__(self, run_func=lambda event: event):
 		self.mod_keys = mod_keys
 		self.pressed = set()
-		self.mods = set()
 		self.run_func = run_func
 		self.activated_already = set()
 		self.last_mouse_coords = (0, 0)
@@ -64,24 +64,11 @@ class Console(EventHandler):
 		self.mouse_events = []
 		self.keyboard_events = []
 
-	def start(self):
-		Thread(target=self.run_key, daemon=True).start()
-#		Thread(target=self.run_mouse, daemon=True).start()
-
 	def run(self):
-		self.clear_queue()
-		if self.mouse_events:
-			self.event_queue += self.mouse_events
-			self.mouse_events = []
-			Thread(target=self.run_mouse, daemon=True).start()
-		if self.keyboard_events:
-			self.event_queue += self.keyboard_events
-			self.keyboard_events = []
-			Thread(target=self.run_key, daemon=True).start()
-		[self.run_func(e) for e in self.event_queue if e.input]
-
-	def clear_queue(self):
 		self.event_queue = []
+		self.run_key(self.event_queue)
+#		self.run_mouse(self.event_queue)
+		[self.run_func(e) for e in self.event_queue if e.input]
 
 	def processCode(self, code):
 		"""makes the key code the same as pygame's"""
@@ -94,9 +81,8 @@ class Console(EventHandler):
 		code = event_names.get(code, code)
 		return code
 
-	def run_mouse(self):
-		print("ran")
-		events = get_mouse()
+	def run_mouse(self, queue):
+		events = get_mouse(False)
 		coords = [0,0]
 		mousemotion_event = None
 		for event in events:
@@ -121,7 +107,7 @@ class Console(EventHandler):
 			else:
 				event_obj.set_type(event_type)
 				event_obj.state = state
-			self.mouse_events.append(event_obj)
+			queue.append(event_obj)
 		if coords[0] or coords[1]:
 			event_obj = EventTemplate(mousemotion_event)
 			event_obj.set_type('mousemotion')
@@ -129,19 +115,17 @@ class Console(EventHandler):
 			event_obj.mouse_x, event_obj.mouse_y = coords
 			event_obj.mouse_rel = (self.last_mouse_coords[0] - coords[0], self.last_mouse_coords[1] - coords[1])
 			self.last_mouse_coords = coords
-			self.mouse_events.append(event_obj)
+			queue.append(event_obj)
 
-	def run_key(self):
-		events = get_key()
+	def run_key(self, queue):
+		events = get_key(False)
 		for event in events:
 			event = self.convert_key_event(event)
 			if not event: # this is to make sure the duplicated events don't run
 				continue
-			self.keyboard_events.append(event)
-			if event.state == 1 and event.input:
+			queue.append(event)
+			if event.state == 1 and event.input and not event.key in [e.key for e in self.pressed]:
 				self.pressed.add(event)
-			elif event in self.pressed:
-				self.pressed.remove(event)
 
 	def convert_key_event(self, event): 
 		ev_type, code, state = [event.ev_type, event.code, event.state]
@@ -152,11 +136,14 @@ class Console(EventHandler):
 			return False
 		else:
 			self.activated_already.add((code, state))
+		in_mods = [e for e in self.pressed if code == e.key]
+		if not state and in_mods:
+			self.pressed.remove(in_mods[0])
 		event_obj = EventTemplate()
 		event_obj.event = event
 		event_obj.set_type(ev_type.lower())
 		event_obj.state = state
-		event_obj.mods = self.pressed
+		event_obj.mods = list(self.pressed)
 		if event_obj.type == 'key':
 			event_obj.key = code
 		return event_obj
@@ -167,9 +154,12 @@ if __name__ == "__main__":
 		def run_func(event):
 			if event.type == 'key':
 				print(event.key)
+				print("mods are: %s" % event.mods)
+
+			elif event.type == "mousebutton" and event.state:
+				print("clicked!")
 
 		console = Console(run_func)
-		console.start()
 		while 1:
 			console.run()
 

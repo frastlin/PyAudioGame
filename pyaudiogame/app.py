@@ -92,6 +92,7 @@ class App(object):
 
 	def keys(self, input_event):
 		event = self.keymap.getEvent(input_event.key, input_event.mods, input_event.state)
+#		print(input_event.key, input_event.mods, input_event.state)
 		if event == "quit" or self.logic(input_event.__dict__) == False:
 			self.running = False
 
@@ -139,11 +140,19 @@ class App(object):
 		sys.exit()
 
 if __name__ == '__main__':
-	f = App("Key Test")
+	f = App("Key Test", window_type="console")
+	p = []
 	def logic(actions):
+		global p
 		if(actions['key']):
-			spk(actions['key'])
-#			print(actions['key'])
+#			spk(actions['key'])
+			if not actions['key'] in p and actions['state']:
+#				print(actions['key'])
+				print('%s with mods %s' % (actions['key'], actions['mods']))
+				p.append(actions['key'])
+			elif not actions['state'] and actions['key'] in p:
+				print("released: %s" % actions['key'])
+				p.remove(actions['key'])
 #		mods = actions['mods']
 #		if mods:
 #			spk(str(mods))
