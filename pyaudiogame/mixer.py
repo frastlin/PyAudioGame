@@ -5,7 +5,8 @@ pre_init(44100,-16, 2, 2048)
 init()
 set_num_channels(50)
 
-from pyaudiogame import event_queue as mixer_queue
+# the queue for moving events
+from pyaudiogame.app import mixer_queue
 
 # Position is to controll the 3D audio
 from pyaudiogame import position

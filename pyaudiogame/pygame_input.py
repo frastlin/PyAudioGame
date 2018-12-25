@@ -45,16 +45,13 @@ activeevent_states = {
 }
 
 class PygameInput(EventHandler):
-	def __init__(self, run_func):
-		EventHandler.__init__(self)
-		self.run_func = run_func
+	def __init__(self, **kwargs):
+		EventHandler.__init__(self, **kwargs)
 
 	def run(self):
 		for event in pygame.event.get():
 			event = self.convert_event(event)
 			self.run_handlers(event)
-			if event.input:
-				self.run_func(event)
 
 	def convert_event(self, event):
 		event_dict = event.__dict__

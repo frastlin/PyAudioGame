@@ -13,6 +13,9 @@ import pyaudiogame.ticker as ticker
 #This is a global event queue
 event_queue = ticker.Scheduler(time_format=0.001)
 
+# This is for the sounds
+mixer_queue = ticker.MixerEventQueue()
+
 class App(object):
 	"""This is to subclass for an application."""
 
@@ -40,9 +43,8 @@ class App(object):
 			{'key': 'escape', 'event':'quit'}
 		])
 		# The input objects
-		self.pygame_events = PygameInput(self.keys)
-		self.console_events = Console(self.keys)
-		self.events = self.console_events if self.window_type == 'console' else self.pygame_events
+		self.pygame_events = PygameInput(on_input=self.keys, on_event=self.handle_pygame_events)
+		self.console_events = Console(on_input=self.keys)
 
 		#Our exicution variables
 		self.running = True
@@ -69,7 +71,9 @@ class App(object):
 		tick = event_queue.tick
 		#create the game loop
 		while True:
-			self.events.run() # logic and everything runs in the key function
+			self.pygame_events.run()
+			if self.window_type == 'console':
+				self.console_events.run()
 			if not self.running:
 				break
 			tick(fpsClock(fps))
@@ -95,6 +99,10 @@ class App(object):
 #		print(input_event.key, input_event.mods, input_event.state)
 		if event == "quit" or self.logic(input_event.__dict__) == False:
 			self.running = False
+
+	def handle_pygame_events(self, event):
+		if event.type:
+			mixer_queue.tick(event.type)
 
 	def old_keys(self):
 		"""Will return a dict of all the keyboard and other input events of pygame's event system"""

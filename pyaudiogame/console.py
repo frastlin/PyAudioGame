@@ -3,7 +3,6 @@ Note that the mouse events don't work very well. Something is wrong with the pip
 print(event.ev_type, event.code, event.state)
 """
 import sys
-from threading import Thread
 
 from inputs import get_key, get_mouse
 
@@ -53,10 +52,10 @@ mouse_types = {
 }
 
 class Console(EventHandler):
-	def __init__(self, run_func=lambda event: event):
+	def __init__(self, **kwargs):
+		EventHandler.__init__(self, **kwargs)
 		self.mod_keys = mod_keys
 		self.pressed = set()
-		self.run_func = run_func
 		self.activated_already = set()
 		self.last_mouse_coords = (0, 0)
 		self.event_queue = []
@@ -68,7 +67,7 @@ class Console(EventHandler):
 		self.event_queue = []
 		self.run_key(self.event_queue)
 #		self.run_mouse(self.event_queue)
-		[self.run_func(e) for e in self.event_queue if e.input]
+		[self.run_handlers(e) for e in self.event_queue if e.input]
 
 	def processCode(self, code):
 		"""makes the key code the same as pygame's"""

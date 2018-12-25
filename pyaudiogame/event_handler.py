@@ -1,3 +1,12 @@
+def _run_on_callbacks(self, name):
+	def returned_func(event):
+		try:
+			self.__dict__['_' + name](event)
+		except KeyError:
+			pass
+		object.__getattribute__(self, name)(event)
+	return returned_func
+
 class EventTemplate(object):
 	def __init__(self, event=None, input_types=['key', 'mousebutton', 'mousemove']):
 		self._input_types = input_types
@@ -20,8 +29,10 @@ class EventTemplate(object):
 			self.input = True
 
 class EventHandler(object):
-	def __init__(self):
-		pass
+	def __init__(self, **kwargs):
+		for k, v in kwargs.items():
+			if k.startswith("on"):
+				self.__dict__["_" + k] = v
 
 # Normally the over-ridden functions when creating an EventHandler
 	def convert_event(self, event):
@@ -136,3 +147,8 @@ class EventHandler(object):
 	def on_event(self, event):
 		pass
 
+	def __getattribute__(self, name):
+		"""This runs a check to see if there are any internal functions to call before the handler runs. This is so the engine can set its own internal attributes and still allow users to create their own handlers"""
+		if name.startswith("on"):
+			return _run_on_callbacks(self, name)
+		return object.__getattribute__(self, name)
