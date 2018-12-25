@@ -5,11 +5,10 @@ pre_init(44100,-16, 2, 2048)
 init()
 set_num_channels(50)
 
-# This queue is for sounds that move around
-mixer_queue
+from pyaudiogame import event_queue as mixer_queue
 
 # Position is to controll the 3D audio
-import position
+from pyaudiogame import position
 
 # The listener is set facing north at 90 degrees. east is 0 degrees and the positions move counterclockwise.
 position.set_listener(0,0,90)
@@ -43,9 +42,10 @@ class Sound(object):
 		self.playing = True
 		if not self.channel or ((not self.single_channel or self.channel.get_sound() != self.sound) and self.channel.get_busy()):
 			self.channel = find_channel() or self.channel
-		self.channel.set_volume(*stereo(*self.pos))
+		self.channel.set_volume(*position.stereo(*self.pos))
 		self.channel.play(self.sound, loops, maxtime, fade_ms)
-		mixer_queue.add(self.channel, self)
+# (figure out what the mixer_queue was in the old script)
+#		mixer_queue.add(self.channel, self)
 
 	def get_event(self):
 		return self.channel.get_endevent()

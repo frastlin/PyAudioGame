@@ -49,7 +49,7 @@ def _angle(x, y):
 	else:
 		a = -ac
 	return a - math.radians(_o)
-	
+
 def stereo(x, y, nodist=False, above=False):
 	"""returns the left and right volumes
 

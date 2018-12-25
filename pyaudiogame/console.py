@@ -7,7 +7,7 @@ from threading import Thread
 
 from inputs import get_key, get_mouse
 
-from event_handler import EventHandler, EventTemplate
+from pyaudiogame.event_handler import EventHandler, EventTemplate
 
 mod_keys = [
 'capslock',
