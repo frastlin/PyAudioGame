@@ -102,3 +102,30 @@ if __name__ == '__main__':
 
 	while c.events:
 		c.tick(fpsClock.tick(fps))
+
+
+class MixerEventQueue(object):
+	def __init__(self):
+		self.object_queue = {}
+		self.channels = {}
+		self.event_starting_num = 24
+
+	def add(self, channel, sound_obj):
+		if not channel in self.channels:
+			self.channels[channel] = self.event_starting_num + len(self.channels)
+			channel.set_endevent(self.channels[channel])
+		event_num = self.channels[channel]
+		if self.object_queue.get(event_num):
+			self.object_queue[event_num].finish()
+		self.object_queue[event_num] = sound_obj
+
+	def remove(self, channel):
+		event_num = self.channels.get(channel)
+		if event_num:
+			self.object_queue[event_num] = None
+
+	def tick(self, event):
+		o = self.object_queue.get(event)
+		if o:
+			o.finish()
+			self.object_queue[event] = None

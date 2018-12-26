@@ -1,20 +1,29 @@
 #Has functions to do everything your engine module needs
 import pygame, random, sys
 from pygame.locals import *
-from speech import speak as spk
+
+from pyaudiogame.speech import speak as spk
+from pyaudiogame.keymap import KeyMap
+from pyaudiogame.pygame_input import PygameInput
+from pyaudiogame.console import Console
+
 #our program spacific modules:
-import ticker
+import pyaudiogame.ticker as ticker
 
 #This is a global event queue
 event_queue = ticker.Scheduler(time_format=0.001)
 
+# This is for the sounds
+mixer_queue = ticker.MixerEventQueue()
+
 class App(object):
 	"""This is to subclass for an application."""
 
-	def __init__(self, title="Test app", fps=30):
+	def __init__(self, title="Test app", fps=30, window_type="pygame"):
 		"""Title is the name of the window, fps is frames per second, how many iterations the loop runs in a given second. The default is 30"""
 		self.title = title
 		self.fps = fps
+		self.window_type = window_type # pygame, console. are the options
 
 		#Default variables that can be changed, but are not called
 		#For the screen:
@@ -27,8 +36,15 @@ class App(object):
 		self.mouse = False
 		#Our event queue
 		self.event_queue = event_queue
-		#A hard-coded exit key, 1 is escape, 2 is alt + f4 and 0 is nothing **WARNING** if there is no exit key you need to go to command prompt window and hit ctrl + c to exit the window!
-		self.exit_key = 1
+		# The default keymap. If there is no quit mapping, then you will need to go to the command prompt and hit ctrl+c to exit the window.
+		# the key mapping object
+		self.keymap = KeyMap([
+			{'key': 'f4', 'mods': ['alt'], 'event': 'quit'},
+			{'key': 'escape', 'event':'quit'}
+		])
+		# The input objects
+		self.pygame_events = PygameInput(on_input=self.keys, on_event=self.handle_pygame_events)
+		self.console_events = Console(on_input=self.keys)
 
 		#Our exicution variables
 		self.running = True
@@ -53,17 +69,12 @@ class App(object):
 		fps = self.fps
 		#tick is for events that are scheduled
 		tick = event_queue.tick
-		#The game logic
-		logic = self.logic
-		#Returns events like key presses and mouse movement and we use it in our game logic
-		keys = self.keys
 		#create the game loop
 		while True:
-			actions = keys()
-			if actions == False:
-				break
-			running = logic(actions)
-			if running == False:
+			self.pygame_events.run()
+			if self.window_type == 'console':
+				self.console_events.run()
+			if not self.running:
 				break
 			tick(fpsClock(fps))
 		self.quit()
@@ -76,11 +87,24 @@ class App(object):
 		else:
 				displaySurface = pygame.display.set_mode((windowwidth, windowheight))
 		pygame.display.set_caption(title)
+		if self.window_type == "console":
+			pygame.display.iconify() #makes the console go in front and the pygame window hide behind
+			pygame.display.set_caption("Don't focus this window, Go back to the console!")
 		if not mouse:
 			pygame.mouse.set_visible(0)
 			return displaySurface
 
-	def keys(self):
+	def keys(self, input_event):
+		event = self.keymap.getEvent(input_event.key, input_event.mods, input_event.state)
+#		print(input_event.key, input_event.mods, input_event.state)
+		if event == "quit" or self.logic(input_event.__dict__) == False:
+			self.running = False
+
+	def handle_pygame_events(self, event):
+		if event.type:
+			mixer_queue.tick(event.type)
+
+	def old_keys(self):
 		"""Will return a dict of all the keyboard and other input events of pygame's event system"""
 		exit_key = self.exit_key
 		#a dict with all the commands that go on
@@ -123,32 +147,23 @@ class App(object):
 		pygame.quit()
 		sys.exit()
 
-mod_id = {
-64: ['left ctrl', 'ctrl'],
-320: ['left ctrl', 'ctrl'],
-1: ['left shift', 'shift'],
-257: ['left shift', 'shift'],
-256: ['left alt', 'alt'],
-2: ['right shift', 'shift'],
-128: ['right ctrl', 'ctrl'],
-65: ['left ctrl', 'ctrl', 'left shift', 'shift'],
-66: ['left ctrl', 'ctrl', 'right shift', 'shift'],
-257: ['left alt', 'alt', 'left shift', 'shift'],
-129: ['right ctrl', 'ctrl', 'left shift', 'shift'],
-130: ['right ctrl', 'ctrl', 'right shift', 'shift'],
-321: ['left ctrl', 'ctrl', 'left alt', 'alt', 'left shift', 'shift'],
-322: ['left ctrl', 'ctrl', 'left alt', 'alt', 'right shift', 'shift'],
-258: ['left alt', 'alt', 'right shift', 'shift'],
-384: ['left alt', 'alt', 'right ctrl', 'ctrl'],
-386: ['left alt', 'alt', 'right ctrl', 'ctrl', 'right shift', 'shift'],
-}
-
 if __name__ == '__main__':
-	f = App("Key Test")
+	f = App("Key Test", window_type="console")
+	p = []
 	def logic(actions):
-		mods = actions['mods']
-		if mods:
-			spk(str(mods))
+		global p
+		if(actions['key']):
+#			spk(actions['key'])
+			if not actions['key'] in p and actions['state']:
+#				print(actions['key'])
+				print('%s with mods %s' % (actions['key'], actions['mods']))
+				p.append(actions['key'])
+			elif not actions['state'] and actions['key'] in p:
+				print("released: %s" % actions['key'])
+				p.remove(actions['key'])
+#		mods = actions['mods']
+#		if mods:
+#			spk(str(mods))
 
 	f.logic = logic
 	f.run()

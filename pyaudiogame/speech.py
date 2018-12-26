@@ -1,9 +1,26 @@
 #Speaks text in the way I wish without hard-coding accessible_output like normal.
-#import accessible_output2.outputs.auto
-#spk = accessible_output2.outputs.auto.Auto().output
 
-from accessible_output import speech
-spk = speech.Speaker().output
+# here are the dependencies for the below packages:
+# libloader:
+# http://hg.q-continuum.net/libloader/
+# platform_utils:
+# http://hg.q-continuum.net/platform_utils/
+
+#Here is the link to the below package:
+# http://hg.q-continuum.net/accessible_output2/
+
+try:
+	import accessible_output2.outputs.auto
+	spk = accessible_output2.outputs.auto.Auto().output
+except:
+	try:
+		#here is the link for the below package:
+		# http://hg.q-continuum.net/accessible_output/
+		from accessible_output import speech
+		spk = speech.Speaker().output
+	except:
+		print("No speech package installed, using print")
+		spk = lambda text: print(text)
 
 speechOn = True
 lexicon = {' ': 'space', '\n': 'carriage return'}

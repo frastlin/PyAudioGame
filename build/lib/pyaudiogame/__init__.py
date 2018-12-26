@@ -1,4 +1,4 @@
-#import ui
-from app import App
-#import mixer, cash
-from speech import speak
+from pyaudiogame.app import App
+from pyaudiogame.app import event_queue
+from pyaudiogame.speech import speak
+import pyaudiogame.storage

@@ -1,8 +1,9 @@
-<title>Readme for pyaudiogame</title>
+Readme for pyaudiogame
 
 
-<h1>About</h1>
-Libaudiogame is a toolkit for creating audio games in python  
+# About
+
+pyaudiogame is a toolkit for creating audio games in python  
 In just a few lines of code, you can have a game window running and a place for your game logic.  
 <h1>Where to download</h1>
 You can download pyaudiogame from
@@ -16,11 +17,9 @@ Also checkout
 Most of what you need is in requires/. Just go in there and run:  
 python setup.py install  
 and you will be good.  
-You also need
-<a href="http://pygame.org/download.shtml">pygame</a>
-to run this package.
+The dependencies for this package are pygame, accessible_output2, and inputs.
 
-<h1>Code example</h1>
+# Code example
 <pre>
 #Hello world example
 import pyaudiogame

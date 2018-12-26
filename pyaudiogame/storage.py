@@ -1,4 +1,17 @@
 #Use this module to store variables and settings
+# The variables that can't be stored here are:
+# _pickle, save, and load.
+# usage:
+"""
+import storage
+storage.hitpoints = 100
+storage.hitpoints -= 4
+storage.save()
+# then on reload of the app
+storage.load()
+print(storage.hitpoints)
+>>> 96
+"""
 try:
 	import cPickle as _pickle
 except:
