@@ -43,10 +43,9 @@ class Sound(object):
 		self.playing = True
 		if not self.channel or ((not self.single_channel or self.channel.get_sound() != self.sound) and self.channel.get_busy()):
 			self.channel = find_channel() or self.channel
-		self.channel.set_volume(*position.stereo(*self.pos))
 		self.channel.play(self.sound, loops, maxtime, fade_ms)
-# (figure out what the mixer_queue was in the old script)
-#		mixer_queue.add(self.channel, self)
+		self.channel.set_volume(*position.stereo(*self.pos))
+		mixer_queue.add(self.channel, self)
 
 	def get_event(self):
 		return self.channel.get_endevent()
@@ -62,7 +61,7 @@ class Sound(object):
 	def set_pos(self, x, y):
 		self.pos = (float(x), float(y))
 		if(self.channel):
-			self.channel.set_volume(*stereo(*self.pos))
+			self.channel.set_volume(*position.stereo(*self.pos))
 
 	def get_pos(self):
 		return self.pos
