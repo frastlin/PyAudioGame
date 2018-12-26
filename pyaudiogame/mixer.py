@@ -31,13 +31,18 @@ class Sound(object):
 
 	def __init__(self, filename, position=(0.0, 0.0), single_channel=True):
 		self.name = filename
-		self.sound = Mixer_sound(filename)
 		self.pos = position
 		self.channel = None
 		self.paused = False
 		self.playing = False
 		self.single_channel = single_channel
 		self.callback = lambda e: None
+
+		try:
+			self.sound = Mixer_sound(filename)
+		except:
+			raise Exception("Unable to open file %r" % filename)
+
 
 	def play(self, loops=0, maxtime=0, fade_ms=0):
 		self.playing = True
