@@ -27,6 +27,29 @@ class Grid(object):
 					return o.run()
 				return True
 
+	def point_in_polygon(self, x, y, poly):
+		"""Generic point in polygon function, polygon must be a set of x y tuples in a clockwise or counterclockwise order."""
+		n = len(poly)
+		inside = False
+		try:
+			p1x, p1y = poly[0]
+		except IndexError:
+			return None
+		for i in range(n+1):
+			p2x, p2y = poly[i % n]
+			if x == p2x and y == p2y:
+				return True
+			if y > min(p1y, p2y):
+				if y <= max(p1y,p2y):
+					if x < max(p1x, p2x):
+						if p1y != p2y:
+							xinters = (y-p1y)*(p2x-p1x)/(p2y-p1y)+p1x
+						if p1x == p2x or x <= xinters:
+							inside = not inside
+			p1x, p1y = p2x, p2y
+		return inside
+
+
 	def add_wall(self, min_x, max_x, min_y, max_y, run=None):
 		"""Adds a Wall object to the object list"""
 		new_wall = Wall(min_x, max_x, min_y, max_y, run)
@@ -40,6 +63,7 @@ class Wall(object):
 		self.max_x = max_x
 		self.min_y = min_y
 		self.max_y = max_y
+		self.poly = [[min_x, min_y], [min_x, max_y], [max_x, max_y], [max_x, min_y]]
 		self.run = run
 
 	def __repr__(self):
