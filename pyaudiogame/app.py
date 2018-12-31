@@ -62,6 +62,8 @@ class App(object):
 		"""Call this when you are ready to start your game. It will run your main loop and create your screen"""
 		#Call the screen
 		self.create_surface(windowwidth=self.windowwidth, windowheight=self.windowheight, title=self.title, fullscreen=self.fullscreen, mouse=self.mouse)
+		# add the event handlers specified in self
+		self._add_handlers()
 		#the clock for checking that we run 30 times a second:
 		fpsClock = pygame.time.Clock().tick
 		fps = self.fps
@@ -140,8 +142,20 @@ class App(object):
 		"""adds an event handler to the event handlers. Window can be either "console", "pygame", or None. If None, it will do both. The name is to specify the handler name, such as on_input if the name is different than the handler_func's name."""
 		if not name:
 			name = handler_func.__name__
-		self.pygame_events.__dict__[name] = handler_func
-		self.console_events.__dict__[name] = handler_func
+		if window == "console":
+			self.console_events.__dict__[name] = handler_func
+		elif window == "pygame":
+			self.pygame_events.__dict__[name] = handler_func
+		else:
+			self.pygame_events.__dict__[name] = handler_func
+			self.console_events.__dict__[name] = handler_func
+
+	def _add_handlers(self):
+		"""Adds all the on_ functions in self to the two event handlers."""
+		d = self.__dict__.items()
+		for k, v in d:
+			if k.startswith("on_"):
+				self.add_handler(v, name=k)
 
 	def key_repeat(self, on=True, delay=1000, delay_before_first_repeat=1):
 		"""Call this function to either start what happens when a key is held down or to turn it off."""
