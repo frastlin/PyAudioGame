@@ -5,7 +5,9 @@ Readme for pyaudiogame
 
 pyaudiogame is a toolkit for creating audio games in python  
 In just a few lines of code, you can have a game window running and a place for your game logic.  
-<h1>Where to download</h1>
+
+# Where to download
+
 You can download pyaudiogame from
 [The Git Releases page](https://github.com/frastlin/PyAudioGame/releases)  
 or, if you would like to get all the new updates  

@@ -1,3 +1,5 @@
+from pyaudiogame import global_keymap
+
 def _run_on_callbacks(self, name):
 	def returned_func(event):
 		try:
@@ -27,6 +29,10 @@ class EventTemplate(object):
 		self.type = type
 		if type in self._input_types:
 			self.input = True
+
+	@property
+	def keymap_event(self):
+		return global_keymap.getEvent(self.key, self.mods, self.state)
 
 class EventHandler(object):
 	def __init__(self, **kwargs):

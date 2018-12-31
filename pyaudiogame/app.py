@@ -3,9 +3,9 @@ import pygame, random, sys
 from pygame.locals import *
 
 from pyaudiogame.speech import speak as spk
-from pyaudiogame.keymap import KeyMap
 from pyaudiogame.pygame_input import PygameInput
 from pyaudiogame.console import Console
+from pyaudiogame import global_keymap
 
 #our program spacific modules:
 import pyaudiogame.ticker as ticker
@@ -36,15 +36,9 @@ class App(object):
 		self.mouse = False
 		#Our event queue
 		self.event_queue = event_queue
-		# The default keymap. If there is no quit mapping, then you will need to go to the command prompt and hit ctrl+c to exit the window.
-		# the key mapping object
-		self.keymap = KeyMap([
-			{'key': 'f4', 'mods': ['alt'], 'event': 'quit'},
-			{'key': 'escape', 'event':'quit'}
-		])
 		# The input objects
-		self.pygame_events = PygameInput(on_input=self.keys, on_event=self.handle_pygame_events)
-		self.console_events = Console(on_input=self.keys)
+		self.pygame_events = PygameInput(on_input=self._on_input, on_event=self.handle_pygame_events)
+		self.console_events = Console(on_input=self._on_input)
 
 		#Our exicution variables
 		self.running = True
@@ -53,7 +47,11 @@ class App(object):
 		self.set_defaults()
 
 	def logic(self, actions):
-		"""Overwrite this and put your game logic here. This is just a place-holder for now"""
+		"""This is a function that is a placeholder. A dict of the event object is passed in and this is run in the on_input handler."""
+		pass
+
+	def in_main_loop(self):
+		"""A function that is run every game loop that can be over ridden"""
 		pass
 
 	def set_defaults(self):
@@ -67,6 +65,8 @@ class App(object):
 		#the clock for checking that we run 30 times a second:
 		fpsClock = pygame.time.Clock().tick
 		fps = self.fps
+		# in_main_loop is a placeholder function that is run every loop
+		in_main_loop = self.in_main_loop
 		#tick is for events that are scheduled
 		tick = event_queue.tick
 		#create the game loop
@@ -76,6 +76,7 @@ class App(object):
 				self.console_events.run()
 			if not self.running:
 				break
+			in_main_loop()
 			tick(fpsClock(fps))
 		self.quit()
 
@@ -94,9 +95,9 @@ class App(object):
 			pygame.mouse.set_visible(0)
 			return displaySurface
 
-	def keys(self, input_event):
-		event = self.keymap.getEvent(input_event.key, input_event.mods, input_event.state)
-#		print(input_event.key, input_event.mods, input_event.state)
+	def _on_input(self, input_event):
+		"""Handles the logic function and exiting"""
+		event = input_event.keymap_event
 		if event == "quit" or self.logic(input_event.__dict__) == False:
 			self.running = False
 
@@ -104,7 +105,7 @@ class App(object):
 		if event.type:
 			mixer_queue.tick(event.type)
 
-	def old_keys(self):
+	def old__on_input(self):
 		"""Will return a dict of all the keyboard and other input events of pygame's event system"""
 		exit_key = self.exit_key
 		#a dict with all the commands that go on
@@ -134,6 +135,13 @@ class App(object):
 			if event.type == QUIT or (actions['key'] == "escape" and exit_key == 1) or ('alt' in actions['mods'] and actions['key'] == 'f4' and exit_key == 2):
 				return False
 		return actions
+
+	def add_handler(self, handler_func, name=None, window=None):
+		"""adds an event handler to the event handlers. Window can be either "console", "pygame", or None. If None, it will do both. The name is to specify the handler name, such as on_input if the name is different than the handler_func's name."""
+		if not name:
+			name = handler_func.__name__
+		self.pygame_events.__dict__[name] = handler_func
+		self.console_events.__dict__[name] = handler_func
 
 	def key_repeat(self, on=True, delay=1000, delay_before_first_repeat=1):
 		"""Call this function to either start what happens when a key is held down or to turn it off."""
