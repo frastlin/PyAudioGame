@@ -16,7 +16,7 @@ class EventTemplate(object):
 		self.type = ''
 		self.state = -1
 		self.key = ''
-		self.button = ''
+		self._button = ''
 		self.mods = []
 		self.focused = None
 		self.input = False
@@ -33,6 +33,15 @@ class EventTemplate(object):
 	@property
 	def keymap_event(self):
 		return global_keymap.getEvent(self.key, self.mods, self.state)
+
+	@property
+	def button(self):
+		return self._button
+
+	@button.setter
+	def button(self, button):
+		self._button = button
+		self.key = "mouse" + str(button)
 
 class EventHandler(object):
 	def __init__(self, **kwargs):

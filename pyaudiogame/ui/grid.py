@@ -4,6 +4,10 @@
 #the first two numbers are saying that our x Wall is from 0 to 10 on the grid. that means we have a Wall that is 10 squares long.
 #the second two numbers say that we wish our y Wall to go up from 10 to 10. This means that it is just 1 square wide.
 
+# imports for the AdvancedGrid class
+from pyaudiogame import event_queue
+from pyaudiogame import global_keymap
+
 class Grid(object):
 	"""Call this class with the width and height, then check(x, y) to see if there is something where that x,y point is."""
 
@@ -97,6 +101,24 @@ class Polygon(object):
 
 	def __repr__(self):
 		return self.poly
+
+
+class AdvancedGrid(object):
+	def __init__(self, width, height, step_sounds=[], hit_tsounds=[], speed=1, starting_pos=(1,1), keymap=[{'key':'up', 'event':'up'},{'key':'down', 'event':'down'},{'key':'left','event':'left'},{'key':'right','event':'right'}]):
+		self.height = height
+		self.width = width
+		self.speed = speed
+		self.pos = starting_pos
+		self.step_sounds = step_sounds
+		self.hit_sounds = hit_sounds
+		self.keymap = keymap
+		self.grid = Grid(width, height)
+		global_keymap.add(keymap)
+
+	def move(self, event):
+		"""Pass the event object in from an EventHandler that has events from the global_keymap"""
+		e = event.keymap_event
+
 
 if __name__ == '__main__':
 	my_grid = Grid(50, 50)
