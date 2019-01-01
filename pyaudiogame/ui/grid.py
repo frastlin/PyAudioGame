@@ -98,7 +98,7 @@ class Wall(object):
 class Polygon(object):
 	def __init__(self, poly, callback=None):
 		self.poly = poly
-		self.callback = None
+		self.callback = callback
 
 	def __repr__(self):
 		return self.poly
@@ -183,11 +183,11 @@ class AdvancedGrid(object):
 
 	def add_wall(self, min_x, max_x, min_y, max_y, callback=None):
 		"""Adds a Wall object to the object list in the grid"""
-		return self.grid.add_wall(min_x, max_x, min_y, max_y, callback=None)
+		return self.grid.add_wall(min_x, max_x, min_y, max_y, callback)
 
 	def add_polygon(self, poly, callback=None):
 		"""Creates a Polygon and adds it to the objects list"""
-		return self.grid.add_polygon(poly, callback=None)
+		return self.grid.add_polygon(poly, callback)
 
 if __name__ == '__main__':
 	my_grid = Grid(50, 50)
