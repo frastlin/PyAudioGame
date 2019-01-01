@@ -206,7 +206,9 @@ class SoundIterator(object):
 			[s.stop() for s in self.sounds]
 
 	def _play_single(self):
-		"""Will play either the next sound, or a random sound"""
+		"""Will play either the next sound, or a random sound. If there are no sounds, it plays no sounds."""
+		if not self.sounds:
+			return False
 		self.sounds[self.index].play()
 		if self.random:
 			if self.random_repeat:
