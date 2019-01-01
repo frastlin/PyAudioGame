@@ -1,12 +1,13 @@
 #This module deals with sound and music playback
+from random import choice
 from pygame.mixer import *
 from pygame.mixer import Sound as Mixer_sound
 pre_init(44100,-16, 2, 2048)
 init()
 set_num_channels(50)
 
-# the queue for moving events
-from pyaudiogame.app import mixer_queue
+# event queue for scheduling end events
+from pyaudiogame import event_queue
 
 # Position is to controll the 3D audio
 from pyaudiogame import position
@@ -35,8 +36,10 @@ class Sound(object):
 		self.channel = None
 		self.paused = False
 		self.playing = False
+		self.stopped = False # this is to tell a callback if the sound was stopped by a stop function or not.
 		self.single_channel = single_channel
-		self.callback = lambda e: None
+		self.callback = lambda e: None # the callback is passed this object as an argument and is triggered at the end of the sound
+		self._id = "sound-%s-%s" % (self.name, id(self))
 
 		try:
 			self.sound = Mixer_sound(filename)
@@ -46,14 +49,13 @@ class Sound(object):
 
 	def play(self, loops=0, maxtime=0, fade_ms=0):
 		self.playing = True
+		self.stopped = False
 		if not self.channel or ((not self.single_channel or self.channel.get_sound() != self.sound) and self.channel.get_busy()):
 			self.channel = find_channel() or self.channel
 		self.channel.play(self.sound, loops, maxtime, fade_ms)
 		self.channel.set_volume(*position.stereo(*self.pos))
-		mixer_queue.add(self.channel, self)
-
-	def get_event(self):
-		return self.channel.get_endevent()
+		event_queue.schedule(function=self.check_if_finished, repeats=-1, delay=0, name=self._id) # this uses the channel.get_busy to figure out if the sound has finished playing.
+#		event_queue.schedule(function=self.finish, repeats=1, delay=self.get_length()-0.09, name=self._id) # This does the same as above, but uses the length of the sound to schedule an end event. The problem with this is that if one pauses the sound, the event still runs. The pro is that the end event can be faster than the actual sound.
 
 	def get_volume(self):
 		return self.channel.get_volume()
@@ -70,6 +72,9 @@ class Sound(object):
 
 	def get_pos(self):
 		return self.pos
+
+	def get_length(self):
+		return self.sound.get_length()
 
 	def toggle_pause(self):
 		"""This function can be called to pause and unpause a sound without the script needing to handle the check for paused and unpaused. If the sound is paused when this function is called, then the sound is unpaused and if the sound is playing when this function is called, then the sound is paused. It's very good for buttons to play and pause sounds."""
@@ -94,17 +99,34 @@ class Sound(object):
 		self.paused = True
 
 	def stop(self):
+		"""This stops the channel from playing."""
+		event_queue.unschedule(self._id)
 		self.playing = False
+		self.paused = False
+		self.stopped = True
 		self.unpause()
-		self.channel.stop()
-		mixer_queue.remove(self.channel)
+		if self.channel:
+			self.channel.stop()
 		self.finish()
 
 	def stop_sound(self):
+		"""This stops the sound object from playing rather than the channel"""
 		self.sound.stop()
 		self.unpaws()
 		self.playing = False
 		mixer_queue.remove(self.channel)
+
+	def get_busy(self):
+		"""Returns if the channel is active. This is used for triggering the callback"""
+		if self.channel:
+			return self.channel.get_busy()
+		return False
+
+	def check_if_finished(self):
+		"""This runs every tick to see if the channel is done. if it is done, then it runs the finish method and removes itself from the event_queue."""
+		if not self.get_busy():
+			self.finish()
+			event_queue.unschedule(self._id)
 
 	def toggle_playing(self):
 		if self.playing:
@@ -141,3 +163,54 @@ def mixer_toggle_pause(excluded_channels=[]):
 		pause()
 		mixer_paused = True
 		[c.unpause() for c in excluded_channels if not c.is_paused()]
+
+class SoundIterator(object):
+	def __init__(self, *args, random=False, random_repeat=True):
+		"""Pass in sound files, Sound objects, or SoundIterator objects (anything with a play method and an on_end event (if the play_loop functionality is desired)), and if random is false, then they will be played in order. Otherwise they will be played randomly."""
+		self.sounds = [Sound(s) for s in args if type(s) == str]
+		self.random = random
+		self.random_repeat = random_repeat
+		self.index = 0
+		self.event_name = "%sEndSoundEvent" % id(self)
+		self.playing = False
+
+	def play(self, looping=False):
+		"""Plays sounds"""
+		self.playing = True
+		if looping:
+			self._play_looping()
+		else:
+			self._play_single()
+
+	def toggle_looping(self, current_sound=True):
+		if self.playing:
+			self.stop(current_sound)
+		else:
+			self.play(looping=True)
+
+	def _play_looping(self, e=None):
+		"""plays the sounds until stop is called. makes this function the callback of the sound. If this sound is called, it should not have a callback as it overwrites the callback"""
+		if self.playing:
+			s = self.sounds[self.index]
+			s.callback = self._play_looping
+			self._play_single()
+
+	def stop(self, current_sound=True):
+		"""Stops all sounds. If current_sound is False, then the current sound will finish, and no more sounds will play."""
+		self.playing = False
+		if current_sound:
+			[s.stop() for s in self.sounds]
+
+	def _play_single(self):
+		"""Will play either the next sound, or a random sound"""
+		self.sounds[self.index].play()
+		if self.random:
+			if self.random_repeat:
+				self.index = choice(list(range(len(self.sounds))))
+			else:
+				r = list(range(self.index)) + list(range(self.index + 1, len(self.sounds)))
+				self.index = choice(r)
+		else:
+			self.index += 1
+			if self.index == len(self.sounds):
+				self.index = 0

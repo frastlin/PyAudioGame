@@ -26,6 +26,7 @@ class Scheduler:
 
 	def __init__(self, time_format=1):
 		self.events = set()
+		self.new_events = set()
 		self.time_format = time_format
 
 
@@ -38,22 +39,26 @@ class Scheduler:
 			if event.done:
 				done_events.append(event)
 			event.tick(elapsed_time*self.time_format)
+		self.events = self.events | self.new_events
+		self.new_events = set()
 		[self.events.remove(e) for e in done_events]
 
 	def schedule(self, function, delay=0, repeats=1, before_delay=False, name=None, *args, **kwargs):
-		"""function is the name of the function that will run without the (), delay is the amount of time to wait, repeats is the amount of times the event will run (0) for infinent, before_delay says that the function run before the delay, name is the title of the event, and the wrest are arguments for the function"""
+		"""function is the name of the callback function that will run with the given arguments, delay is the amount of time to wait (0 for every tick), repeats is the amount of times the event will run (0 or less) for infinent, before_delay says that the function run before the delay, name is the title of the event, and the wrest are arguments for the function"""
 		e = EventMaker(function, delay, repeats, before_delay, name, *args, **kwargs)
-		self.events.add(e)
+		self.new_events.add(e)
 
 	def unschedule(self, event_name):
 		"""Call this with the event name as a string to remove it from the queue"""
-		for i in self.events:
+		events = self.events | self.new_events
+		for i in events:
 			if i.name == event_name:
 				i.done = True
 
 class EventMaker:
 	"""This class is the event. It has all the functions to run the event."""
 	def __init__(self, function, delay, repeats, before_delay, name, *args, **kwargs):
+		"""function is the name of the callback function that will run with the given arguments, delay is the amount of time to wait (0 for every tick), repeats is the amount of times the event will run (0 or less) for infinent, before_delay says that the function run before the delay, name is the title of the event, and the wrest are arguments for the function"""
 		self.function = function
 		self.delay = delay
 		self.repeats = repeats
@@ -102,30 +107,3 @@ if __name__ == '__main__':
 
 	while c.events:
 		c.tick(fpsClock.tick(fps))
-
-
-class MixerEventQueue(object):
-	def __init__(self):
-		self.object_queue = {}
-		self.channels = {}
-		self.event_starting_num = 24
-
-	def add(self, channel, sound_obj):
-		if not channel in self.channels:
-			self.channels[channel] = self.event_starting_num + len(self.channels)
-			channel.set_endevent(self.channels[channel])
-		event_num = self.channels[channel]
-		if self.object_queue.get(event_num):
-			self.object_queue[event_num].finish()
-		self.object_queue[event_num] = sound_obj
-
-	def remove(self, channel):
-		event_num = self.channels.get(channel)
-		if event_num:
-			self.object_queue[event_num] = None
-
-	def tick(self, event):
-		o = self.object_queue.get(event)
-		if o:
-			o.finish()
-			self.object_queue[event] = None

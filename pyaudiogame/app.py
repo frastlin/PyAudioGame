@@ -13,9 +13,6 @@ import pyaudiogame.ticker as ticker
 #This is a global event queue
 event_queue = ticker.Scheduler(time_format=0.001)
 
-# This is for the sounds
-mixer_queue = ticker.MixerEventQueue()
-
 class App(object):
 	"""This is to subclass for an application."""
 
@@ -37,7 +34,7 @@ class App(object):
 		#Our event queue
 		self.event_queue = event_queue
 		# The input objects
-		self.pygame_events = PygameInput(on_input=self._on_input, on_event=self.handle_pygame_events)
+		self.pygame_events = PygameInput(on_input=self._on_input)
 		self.console_events = Console(on_input=self._on_input)
 
 		#Our exicution variables
@@ -102,10 +99,6 @@ class App(object):
 		event = input_event.keymap_event
 		if event == "quit" or self.logic(input_event.__dict__) == False:
 			self.running = False
-
-	def handle_pygame_events(self, event):
-		if event.type:
-			mixer_queue.tick(event.type)
 
 	def old__on_input(self):
 		"""Will return a dict of all the keyboard and other input events of pygame's event system"""
