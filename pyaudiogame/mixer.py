@@ -166,13 +166,17 @@ def mixer_toggle_pause(excluded_channels=[]):
 
 class SoundIterator(object):
 	def __init__(self, *args, random=False, random_repeat=True):
-		"""Pass in sound files, Sound objects, or SoundIterator objects (anything with a play method and an on_end event (if the play_loop functionality is desired)), and if random is false, then they will be played in order. Otherwise they will be played randomly."""
-		self.sounds = [Sound(s) for s in args if type(s) == str]
+		"""Pass in sound files, or SoundIterator objects (anything with a play method and an on_end event (if the play_loop functionality is desired)), and if random is false, then they will be played in order. Otherwise they will be played randomly. Sound objects can be passed in as well, but their callback functionality will be replaced. It is better to pass in strings."""
+		self.sounds = []
 		self.random = random
 		self.random_repeat = random_repeat
 		self.index = 0
 		self.event_name = "%sEndSoundEvent" % id(self)
 		self.playing = False
+		for s in args:
+			if type(s) == str:
+				s = Sound(s)
+			self.sounds.append(s)
 
 	def play(self, looping=False):
 		"""Plays sounds"""
@@ -214,3 +218,14 @@ class SoundIterator(object):
 			self.index += 1
 			if self.index == len(self.sounds):
 				self.index = 0
+
+	@property
+	def callback(self):
+		"""Just needed as a getter for the property, not needed for the code"""
+		pass
+
+	@callback.setter
+	def callback(self, cb):
+		"""Sets all the sound objects to have the passed callback (cb)"""
+		for s in self.sounds:
+			s.callback = cb
