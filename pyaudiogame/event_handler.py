@@ -40,6 +40,7 @@ class EventTemplate(object):
 
 	@button.setter
 	def button(self, button):
+		"""makes button set self.key to 'button' + button. This is so keymap and event handlers don't need to catch anything but key to get mouse clicks."""
 		self._button = button
 		self.key = "mouse" + str(button)
 
