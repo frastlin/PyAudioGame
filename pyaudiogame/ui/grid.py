@@ -3,6 +3,8 @@
 #MyGrid.add_wall(0,10, 10,10)
 #the first two numbers are saying that our x Wall is from 0 to 10 on the grid. that means we have a Wall that is 10 squares long.
 #the second two numbers say that we wish our y Wall to go up from 10 to 10. This means that it is just 1 square wide.
+import math
+from pyaudiogame.utils.array_math import magnitude, vector, dotProduct, sumArray
 
 # imports for the AdvancedGrid class
 from pyaudiogame import event_queue
@@ -65,6 +67,44 @@ class Grid(object):
 							inside = not inside
 			p1x, p1y = p2x, p2y
 		return inside
+
+	def distance_and_direction_to_polygon(self, point, poly):
+		"""gets the distance and direction in angles to the polygon"""
+		if self.point_in_polygon(*point, poly):
+			return [0, 0]
+		minDist = 10000000000
+		minAngle = 0
+		p1 = poly[0]
+		for i in range(1, len(poly)+1):
+			p2 = poly[i % len(poly)]
+			distance = 0
+			lineVec = vector(p2, p1)
+			perpVec = [lineVec[1], lineVec[0]*-1]
+			dot = dotProduct(perpVec, vector(point, p1))
+			distPointToLine = dot / magnitude(perpVec)
+			perpVecMagnitude = magnitude(perpVec)
+			normalizedPerpVec = [p/perpVecMagnitude for p in perpVec]
+			dotSignedPerpVec = [p * -1 for p in normalizedPerpVec]
+			intersectionPoint = sumArray([p*distPointToLine for p in dotSignedPerpVec], point)
+			# get the distance between each of the points
+			p1_intersectionPoint_dist = magnitude(vector(p1, intersectionPoint))
+			p2_intersectionPoint_dist = magnitude(vector(p2, intersectionPoint))
+			p1_p2_dist = magnitude(vector(p1, p2))
+			# check if the intersectionPoint is on the p1_p2 line
+			online = p1_intersectionPoint_dist + p2_intersectionPoint_dist == p1_p2_dist
+			nearestPoint = intersectionPoint
+			if not online:
+				nearestPoint = p1 if p1_intersectionPoint_dist > p2_intersectionPoint_dist else p2
+			point_to_nearest_point = vector(nearestPoint, point)
+			distance = magnitude(point_to_nearest_point)
+			# get the angle the point is to the line
+			vecRight = [1,0]
+			radAngle = math.atan2((point_to_nearest_point[0]*vecRight[1]) - (point_to_nearest_point[1]*vecRight[0]), (point_to_nearest_point[0] * vecRight[0]) + (point_to_nearest_point[1]*vecRight[1]))
+			degree = radAngle * (180/math.pi)
+			minDist = min(distance, minDist)
+			minAngle = degree if minDist == distance else minAngle
+			p1 = p2
+		return [minDist, minAngle*-1]
 
 	def add_wall(self, min_x, max_x, min_y, max_y, callback=None):
 		"""Adds a Wall object to the object list"""
