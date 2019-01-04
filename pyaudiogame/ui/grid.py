@@ -30,10 +30,11 @@ class Grid(object):
 		"""Checks to see if the passed point is in any of the specified polys"""
 		point_in_polygon = self.point_in_polygon
 		for p in self.objects:
-			if point_in_polygon(x, y, p.poly):
-				if p.callback:
-					return p.callback()
-				return True
+			in_poly = point_in_polygon(x, y, p.poly)
+			on_move_event = OnMoveEvent((x,y), in_poly, *self.distance_and_direction_to_polygon((x,y), p.poly))
+			p.on_move(on_move_event)
+			if in_poly:
+				return p.callback()
 
 	def check_rect(self, x, y):
 		"""Checks if a point is in a rect"""
@@ -108,27 +109,36 @@ class Grid(object):
 			p1 = p2
 		return [minDist, minAngle*-1, tuple(finalNearestPoint)]
 
-	def add_wall(self, min_x, max_x, min_y, max_y, callback=None):
+	def add_wall(self, min_x, max_x, min_y, max_y, callback=lambda:True, on_move=lambda e:True):
 		"""Adds a Wall object to the object list"""
-		new_wall = Wall(min_x, max_x, min_y, max_y, callback)
+		new_wall = Wall(min_x, max_x, min_y, max_y, callback, on_move)
 		self.objects.append(new_wall)
 		return new_wall
 
-	def add_polygon(self, poly, callback=None):
+	def add_polygon(self, poly, callback=lambda:True, on_move=lambda e:True):
 		"""Creates a Polygon and adds it to the objects list"""
-		p = Polygon(poly, callback)
+		p = Polygon(poly, callback, on_move)
 		self.objects.append(p)
 		return p
 
+class OnMoveEvent(object):
+	def __init__(self, current_pos, in_poly, distance, angle, nearest_point):
+		self.current_pos = current_pos
+		self.in_poly = in_poly
+		self.distance = distance
+		self.angle = angle
+		self.nearest_point = nearest_point
+
 class Wall(object):
 	"""This just has the properties for basic Wall objects"""
-	def __init__(self, min_x, max_x, min_y, max_y, callback=None):
+	def __init__(self, min_x, max_x, min_y, max_y, callback=lambda:True, on_move=lambda e:True):
 		self.min_x = min_x
 		self.max_x = max_x
 		self.min_y = min_y
 		self.max_y = max_y
 		self.poly = [(min_x, min_y), (min_x, max_y), (max_x, max_y), (max_x, min_y)]
 		self.callback = callback
+		self.on_move = on_move
 		poly_set = list(set(self.poly))
 		if len(poly_set) == 2:
 			self.poly = poly_set
@@ -138,11 +148,10 @@ class Wall(object):
 		return "WallObject:x(%d, %d)y(%d, %d)" % (self.min_x, self.max_x, self.min_y, self.max_y)
 
 class Polygon(object):
-	def __init__(self, poly, callback=None, sound=None):
+	def __init__(self, poly, callback=lambda:True, on_move=lambda e:True):
 		self.poly = poly
 		self.callback = callback
-		self.sound = sound
-
+		self.on_move = on_move
 
 	def __repr__(self):
 		return self.poly
@@ -225,13 +234,13 @@ class AdvancedGrid(object):
 				self.on_hit(self)
 				return True
 
-	def add_wall(self, min_x, max_x, min_y, max_y, callback=None):
+	def add_wall(self, min_x, max_x, min_y, max_y, callback=lambda:True, on_move=lambda e:True):
 		"""Adds a Wall object to the object list in the grid"""
-		return self.grid.add_wall(min_x, max_x, min_y, max_y, callback)
+		return self.grid.add_wall(min_x, max_x, min_y, max_y, callback, on_move)
 
-	def add_polygon(self, poly, callback=None):
+	def add_polygon(self, poly, callback=lambda:True, on_move=lambda e:True):
 		"""Creates a Polygon and adds it to the objects list"""
-		return self.grid.add_polygon(poly, callback)
+		return self.grid.add_polygon(poly, callback, on_move)
 
 if __name__ == '__main__':
 	my_grid = Grid(50, 50)
