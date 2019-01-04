@@ -117,7 +117,10 @@ class Grid(object):
 
 	def add_polygon(self, poly, callback=lambda:True, on_move=lambda e:True):
 		"""Creates a Polygon and adds it to the objects list"""
-		p = Polygon(poly, callback, on_move)
+		if type(poly) == list or type(poly) == tuple:
+			p = Polygon(poly, callback, on_move)
+		else:
+			 p = poly
 		self.objects.append(p)
 		return p
 
