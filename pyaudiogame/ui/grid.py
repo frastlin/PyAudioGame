@@ -28,12 +28,10 @@ class Grid(object):
 
 	def check(self, x, y):
 		"""Checks to see if the passed point is in any of the specified polys"""
-		point_in_polygon = self.point_in_polygon
 		for p in self.objects:
-			in_poly = point_in_polygon(x, y, p.poly)
-			on_move_event = OnMoveEvent((x,y), in_poly, *self.distance_and_direction_to_polygon((x,y), p.poly))
+			on_move_event = self.get_move_event(x, y, p)
 			p.on_move(on_move_event)
-			if in_poly:
+			if on_move_event  .in_poly:
 				return p.callback()
 
 	def check_rect(self, x, y):
@@ -43,6 +41,12 @@ class Grid(object):
 				if o.callback:
 					return o.callback()
 				return True
+
+	def get_move_event(self, x, y, p):
+		"""x and y are the pos of the player. p is an object with a .poly attribute."""
+		in_poly = self.point_in_polygon(x, y, p.poly)
+		on_move_event = OnMoveEvent((x,y), in_poly, *self.distance_and_direction_to_polygon((x,y), p.poly))
+		return on_move_event  
 
 	def point_in_polygon(self, x, y, poly):
 		"""Generic point in polygon function, polygon must be a set of x y tuples in a clockwise or counterclockwise order."""
