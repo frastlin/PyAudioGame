@@ -71,9 +71,10 @@ class Grid(object):
 	def distance_and_direction_to_polygon(self, point, poly):
 		"""gets the distance and direction in angles to the polygon"""
 		if self.point_in_polygon(*point, poly):
-			return [0, 0]
+			return [0, 0, tuple(point)]
 		minDist = 10000000000
 		minAngle = 0
+		finalNearestPoint = poly[0]
 		p1 = poly[0]
 		for i in range(1, len(poly)+1):
 			p2 = poly[i % len(poly)]
@@ -103,8 +104,9 @@ class Grid(object):
 			degree = radAngle * (180/math.pi)
 			minDist = min(distance, minDist)
 			minAngle = degree if minDist == distance else minAngle
+			finalNearestPoint = nearestPoint if minDist == distance else  finalNearestPoint
 			p1 = p2
-		return [minDist, minAngle*-1]
+		return [minDist, minAngle*-1, tuple(finalNearestPoint)]
 
 	def add_wall(self, min_x, max_x, min_y, max_y, callback=None):
 		"""Adds a Wall object to the object list"""
@@ -136,9 +138,11 @@ class Wall(object):
 		return "WallObject:x(%d, %d)y(%d, %d)" % (self.min_x, self.max_x, self.min_y, self.max_y)
 
 class Polygon(object):
-	def __init__(self, poly, callback=None):
+	def __init__(self, poly, callback=None, sound=None):
 		self.poly = poly
 		self.callback = callback
+		self.sound = sound
+
 
 	def __repr__(self):
 		return self.poly

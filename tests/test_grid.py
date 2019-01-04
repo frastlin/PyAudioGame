@@ -76,13 +76,14 @@ class TestGrid(unittest.TestCase):
 		point1 = [-2,1]
 		self.assertEqual(my_grid.distance_and_direction_to_polygon(point1, poly)[1], 45)
 		self.assertAlmostEqual(my_grid.distance_and_direction_to_polygon(point1, poly)[0], 4.24, places=2)
-		point2 = [1,1]
-		self.assertEqual(my_grid.distance_and_direction_to_polygon(point2, poly), [2.0, 90.0])
+		self.assertEqual(my_grid.distance_and_direction_to_polygon(point1, poly)[2], (1,4))
+		point2 = [1,1, ]
+		self.assertEqual(my_grid.distance_and_direction_to_polygon(point2, poly), [2.0, 90.0, (1.0, 3.0)])
 		point3 = [1, 5]
-		self.assertEqual(my_grid.distance_and_direction_to_polygon(point3, poly), [1.0, -90.0])
+		self.assertEqual(my_grid.distance_and_direction_to_polygon(point3, poly), [1.0, -90.0, (1.0, 4.0)])
 		point4 = [3, 3]
-		self.assertEqual(my_grid.distance_and_direction_to_polygon(point4, poly), [1.0, 180.0])
+		self.assertEqual(my_grid.distance_and_direction_to_polygon(point4, poly), [1.0, 180.0, (2.0, 3.0)])
 		point5 = [-3, 3]
-		self.assertEqual(my_grid.distance_and_direction_to_polygon(point5, poly), [4.0, 0])
+		self.assertEqual(my_grid.distance_and_direction_to_polygon(point5, poly), [4.0, 0, (1.0, 3.0)])
 		point6 = [1,3]
-		self.assertEqual(my_grid.distance_and_direction_to_polygon(point6, poly), [0, 0])
+		self.assertEqual(my_grid.distance_and_direction_to_polygon(point6, poly), [0, 0, (1.0, 3.0)])
