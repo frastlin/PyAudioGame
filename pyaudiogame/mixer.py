@@ -12,6 +12,9 @@ from pyaudiogame import event_queue
 # Position is to controll the 3D audio
 from pyaudiogame import position
 
+# this is a list of currently playing sounds so that when the listener moves, the listener can be updated on any looping sound
+playing_sounds = []
+
 # The listener is set facing north at 90 degrees. east is 0 degrees and the positions move counterclockwise.
 position.set_listener(0,0,90)
 
@@ -21,6 +24,7 @@ def get_listener():
 def set_listener(x,y,o):
 	"""Sets pos of the listener. east is o=0 and north is o=90"""
 	position.set_listener(x,y,o)
+	[sound.set_volume() for sound in playing_sounds]
 
 class Sound(object):
 	"""
@@ -55,7 +59,8 @@ class Sound(object):
 			self.channel = find_channel() or self.channel
 		self.channel.play(self.sound, loops, maxtime, fade_ms)
 		if self.pos:
-			self.channel.set_volume(*position.stereo(*self.pos))
+			playing_sounds.append(self)
+			self.set_volume()
 		event_queue.schedule(function=self.check_if_finished, repeats=-1, delay=0, name=self._id) # this uses the channel.get_busy to figure out if the sound has finished playing.
 #		event_queue.schedule(function=self.finish, repeats=1, delay=self.get_length()-0.09, name=self._id) # This does the same as above, but uses the length of the sound to schedule an end event. The problem with this is that if one pauses the sound, the event still runs. The pro is that the end event can be faster than the actual sound.
 
@@ -103,6 +108,8 @@ class Sound(object):
 	def stop(self):
 		"""This stops the channel from playing."""
 		event_queue.unschedule(self._id)
+		if self in playing_sounds:
+			playing_sounds.remove(self)
 		self.playing = False
 		self.paused = False
 		self.stopped = True
@@ -117,6 +124,8 @@ class Sound(object):
 		self.unpaws()
 		self.playing = False
 		mixer_queue.remove(self.channel)
+		if self in playing_sounds:
+			playing_sounds.remove(self)
 
 	def get_busy(self):
 		"""Returns if the channel is active. This is used for triggering the callback"""
@@ -136,18 +145,25 @@ class Sound(object):
 		else:
 			self.play()
 
-	def set_volume(self, volume):
-		if self.channel:
+	def set_volume(self, volume=1, right=None):
+		"""Sets the volume if there is a channel. If there is a position, then volume is adjusted to be that position. If no arguments are passed, then it will update the volume to be the current pos, or set volume back to 1."""
+		if not  self.channel:
+			return 0
+		if volume > 1:
+			volume = 1
+		elif volume <= 0:
+			self.channel.set_volume(0)
+			return 0
+		if not self.pos and not right:
+			self.channel.set_volume(volume)
+		elif right:
+			self.channel.set_volume(volume, right)
+		else:
 			x, y = self.pos
-			if volume > 1:
-				volume = 1
-			elif volume <= 0:
-				self.channel.set_volume(0)
-				return 0
-			elif x == 0 and y == 0:
+			if x == 0 and y == 0:
 				self.channel.set_volume(volume)
 				return 0
-			self.channel.set_volume(*stereo(x/volume, y/volume))
+			self.channel.set_volume(*position.stereo(x/volume, y/volume))
 
 	def finish(self):
 		self.playing = False
