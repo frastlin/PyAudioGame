@@ -19,6 +19,7 @@ def get_listener():
 	return position.get_listener()
 
 def set_listener(x,y,o):
+	"""Sets pos of the listener. east is o=0 and north is o=90"""
 	position.set_listener(x,y,o)
 
 class Sound(object):
@@ -30,9 +31,9 @@ class Sound(object):
 		This class ads support for 3D positioning. Just pass the position of the sound in a tuple of (x,y) coordinates after the path of the file.
 	"""
 
-	def __init__(self, filename, position=(0.0, 0.0), single_channel=True):
+	def __init__(self, filename, position=None, single_channel=True):
 		self.name = filename
-		self.pos = position
+		self.pos = position # should be a tuple (x, y)
 		self.channel = None
 		self.paused = False
 		self.playing = False
@@ -53,7 +54,8 @@ class Sound(object):
 		if not self.channel or ((not self.single_channel or self.channel.get_sound() != self.sound) and self.channel.get_busy()):
 			self.channel = find_channel() or self.channel
 		self.channel.play(self.sound, loops, maxtime, fade_ms)
-		self.channel.set_volume(*position.stereo(*self.pos))
+		if self.pos:
+			self.channel.set_volume(*position.stereo(*self.pos))
 		event_queue.schedule(function=self.check_if_finished, repeats=-1, delay=0, name=self._id) # this uses the channel.get_busy to figure out if the sound has finished playing.
 #		event_queue.schedule(function=self.finish, repeats=1, delay=self.get_length()-0.09, name=self._id) # This does the same as above, but uses the length of the sound to schedule an end event. The problem with this is that if one pauses the sound, the event still runs. The pro is that the end event can be faster than the actual sound.
 
