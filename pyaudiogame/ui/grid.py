@@ -9,7 +9,7 @@ from pyaudiogame.utils.array_math import magnitude, vector, dotProduct, sumArray
 # imports for the AdvancedGrid class
 from pyaudiogame import event_queue
 from pyaudiogame import KeyMap
-from pyaudiogame.mixer import SoundIterator
+from pyaudiogame.mixer import SoundIterator, set_listener
 
 class Grid(object):
 	"""Call this class with the width and height, then check(x, y) to see if there is something where that x,y point is."""
@@ -162,7 +162,7 @@ class Polygon(object):
 
 class AdvancedGrid(object):
 	"""This is an advanced grid that will take cair of location, handling input, and playing sounds."""
-	def __init__(self, width=50, height=50, step_sounds=[], hit_sounds=[], speed=1, grid=None, starting_pos=(1,1), delay=0.3, start_with_step=True, on_step=None, on_hit=None, keymap=[{'key':'up', 'event':'up'},{'key':'down', 'event':'down'},{'key':'left','event':'left'},{'key':'right','event':'right'}]):
+	def __init__(self, width=50, height=50, step_sounds=[], hit_sounds=[], speed=1, grid=None, starting_pos=(1,1), delay=0.3, start_with_step=True, on_step=None, on_hit=None, move_listener=True, keymap=[{'key':'up', 'event':'up'},{'key':'down', 'event':'down'},{'key':'left','event':'left'},{'key':'right','event':'right'}]):
 		"""arguments:
 			width and height are the dimensions of the grid in an int. They both default to 50.
 			speed is the amount of tiles the pos moves each check in a float
@@ -175,6 +175,7 @@ class AdvancedGrid(object):
 			start_with_step is a bool that is by default True. It means that the user will always step as soon as they press a movement key. If it is False, then there will be a loop that runs every delay and if the running variable is true, then the user will take a step. otherwise, nothing will happen. This prevents users from spamming movement keys, but is not very good for testing.
 			on_hit is a callback function that runs when the user hits an object. It is passed self.
 			on_step is a callback that runs when the user takes a step. It is passed self.
+			move_listener is a boolian that is True by default. If true, the listener object in pyaudiogame.mixer is moved along with the point.
 		"""
 
 		self.height = height
@@ -189,6 +190,7 @@ class AdvancedGrid(object):
 		self.start_with_step = start_with_step
 		self.on_hit = on_hit if on_hit else lambda s: True
 		self.on_step = on_step if on_step else lambda s: True
+		self.move_listener = move_listener
 
 		# operation variables
 		self.moving = False
@@ -231,6 +233,8 @@ class AdvancedGrid(object):
 				self.pos = (x, y)
 				self.step_sounds.play()
 				self.on_step(self)
+				if self.move_listener:
+					set_listener(x, y, 90)
 				return False
 			else:
 				self.hit_sounds.play()
