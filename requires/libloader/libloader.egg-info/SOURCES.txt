@@ -1,9 +1,0 @@
-setup.py
-libloader/__init__.py
-libloader/com.py
-libloader/libloader.py
-libloader.egg-info/PKG-INFO
-libloader.egg-info/SOURCES.txt
-libloader.egg-info/dependency_links.txt
-libloader.egg-info/not-zip-safe
-libloader.egg-info/top_level.txt

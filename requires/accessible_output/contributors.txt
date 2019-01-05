@@ -1,9 +1,0 @@
-List of contributors to Accessible Output:
-
-David Sexton: The original concept of a unified method for accessing multiple screen readers.
-Christopher Toth: Implementation of the current output structure, as well as the crappy priority system and other things thrown in to make it work
-Tiler Spivey: Dolphin support
-Bram Duvigneau: Voiceover output
-Haden Pike: Window Eyes braille
-HLLF: Work on distutils script
-Hrvoje Katic: Sapi5 voice selection and modifications which check if JAWS is running in a different way, suggested by Glen Gordon.

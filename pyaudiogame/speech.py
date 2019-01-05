@@ -9,8 +9,12 @@
 #Here is the link to the below package:
 # http://hg.q-continuum.net/accessible_output2/
 
+from .accessible_output2.outputs import auto
+spk = auto.Auto().output
+
+"""
 try:
-	import accessible_output2.outputs.auto
+	from .accessible_output2.outputs import auto
 	spk = accessible_output2.outputs.auto.Auto().output
 except:
 	try:
@@ -21,6 +25,7 @@ except:
 	except:
 		print("No speech package installed, using print")
 		spk = lambda text: print(text)
+"""
 
 speechOn = True
 lexicon = {' ': 'space', '\n': 'carriage return'}

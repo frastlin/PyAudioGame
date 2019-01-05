@@ -4,7 +4,7 @@ print(event.ev_type, event.code, event.state)
 """
 import sys
 
-from inputs import get_key, get_mouse
+from .inputs import get_key, get_mouse
 
 from pyaudiogame.event_handler import EventHandler, EventTemplate
 
