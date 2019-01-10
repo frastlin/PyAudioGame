@@ -28,14 +28,18 @@ except:
 """
 
 speechOn = True
+always_print = False
 lexicon = {' ': 'space', '\n': 'carriage return'}
 
-def speak(text, sp=True):
+def speak(text, silent=False, also_print=False):
 	"""Is the leading function for speech"""
+	text = str(text)
 	if text in lexicon:
 		text = lexicon.get(text, text)
-	if speechOn and sp:
+	if speechOn and not silent:
 		spk(text)
+	if always_print or also_print:
+		print(text)
 	return Text(text)
 
 class Text(object):

@@ -21,6 +21,7 @@ class App(object):
 		self.title = title
 		self.fps = fps
 		self.window_type = window_type # pygame, console. are the options
+		self.displaySurface = None # is set when self.create_surface is run. It is a pygame surface
 
 		#Default variables that can be changed, but are not called
 		#For the screen:
@@ -79,6 +80,17 @@ class App(object):
 			tick(fpsClock(fps))
 		self.quit()
 
+	def run_main_loop(self):
+		"""This runs every loop of the game loop and makes sure pygame is running smoothely"""
+		fpsClock = pygame.time.Clock().tick
+		self.pygame_events.run()
+		if self.window_type == 'console':
+			self.console_events.run()
+		if not self.running:
+			return True
+		in_main_loop()
+		event_queue.tick(fpsClock(self.fps))
+
 	def create_surface(self, windowwidth=640, windowheight=480, title="Test Surface", fullscreen=False, mouse=True):
 		"""will make the main window"""
 		pygame.init()
@@ -92,7 +104,8 @@ class App(object):
 			pygame.display.set_caption("Don't focus this window, Go back to the console!")
 		if not mouse:
 			pygame.mouse.set_visible(0)
-			return displaySurface
+		self.displaySurface  = displaySurface  
+		return displaySurface
 
 	def _on_input(self, input_event):
 		"""Handles the logic function and exiting"""
