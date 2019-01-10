@@ -237,6 +237,20 @@ class AdvancedGrid(Grid):
 		if self.moving:
 			self.move_once(self._current_event)
 
+	def set_pos(self, x, y, play_hit_sounds=False, play_step_sounds=False):
+		"""Sets the player in the given pos"""
+		if not self.grid.check(x, y):
+			self.pos = (x, y)
+			if play_step_sounds: self.step_sounds.play()
+			self.on_step(self)
+			if self.move_listener:
+				set_listener(x, y, 90)
+			return False
+		else:
+			if play_hit_sounds: self.hit_sounds.play()
+			self.on_hit(self)
+			return True
+
 	def move_once(self, event):
 		"""Pass the event object in from an EventHandler that has events from the global_keymap and this will move the player once."""
 		state = self.keymap.getEvent(key=event.key, mods=event.mods, state=event.state)
